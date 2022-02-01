@@ -1,4 +1,4 @@
-<!DOCTYPE urjc_ML SYSTEM "urjc_ml.dtd">
+<!DOCTYPE urjc_ML SYSTEM "universidad.dtd">
 <urjc_ml>
   <!-- include URL URJC -->
   <universidad>
