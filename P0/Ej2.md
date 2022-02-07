@@ -1,5 +1,5 @@
-<!DOCTYPE urjc_ML SYSTEM "universidad.dtd">
-<urjc_ml>
+<!DOCTYPE universidad SYSTEM "universidad.dtd">
+
   <!-- include URL URJC -->
   <universidad>
     <escuela>
@@ -16,4 +16,3 @@
       </grado>
     </escuela>
   </universidad>
-</urjc_ml>
