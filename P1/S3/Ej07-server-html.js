@@ -1,10 +1,11 @@
-//-- Modulos
-const http = require('http');
-const url = require('url');
-const fs = require('fs');
+//-- Ejemplo 7. MODULO HTTP
+//-- Servidor que devuelve una página en HTML cuando se le pide
+//-- el recurso raiz (/), y devuelve una página de ERROR también
+//-- en HTML cuando se pide cualquier otro recurso
 
-//-- Puerto
-const PUERTO = 9090;
+const http = require('http');
+
+const PUERTO = 8080;
 
 //-- Texto HTML de la página principal
 const pagina_main = `
@@ -69,7 +70,6 @@ const server = http.createServer((req, res)=>{
     res.end();
 });
 
-//-- Arrancar el servidor
 server.listen(PUERTO);
 
-console.log("Escuchando en puerto: " + PUERTO);
+console.log("Ejemplo 7. Escuchando en puerto: " + PUERTO);
