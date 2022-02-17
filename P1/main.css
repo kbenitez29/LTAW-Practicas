@@ -6,7 +6,7 @@
 
 .arriba{
     font-family: "Azonix";
-    background-color: rgb(223, 190, 141);
+    background-color: rgb(236, 208, 165);
     text-align: center;
     border: 8px solid rgba(0, 0, 0, 0.356);
     padding: 5px;
@@ -18,10 +18,44 @@ h1{
     margin: auto;
 }
 
+h2{
+    text-align: center;
+    font-size: 35px;
+    margin: auto;
+}
 
 .abajo{
     font-family: "Azonix";
-    background-color: rgb(235, 222, 226);
-    padding: 10px;
+    background:url("image/fondo.jpg");
+    padding-block: 50px;
 }
 
+#contacto{
+    margin-left: 20px;
+    display: inline-block;
+}
+
+#cesta{
+    display: inline-block;
+    margin-left: 1700px ;
+}
+
+#apple{
+    margin-top: 50px;
+    margin-left: 200px;
+    margin-bottom: 20px;
+    display: inline-block;
+    text-align: center;
+}
+
+#samsung{
+    margin-left: 300px;
+    display: inline-block;
+    text-align: center;
+}
+
+#huawei{
+    margin-left: 300px;
+    display: inline-block;
+    text-align: center;
+}
