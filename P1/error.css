@@ -1,0 +1,40 @@
+@font-face{
+    font-family: "Azonix";
+    src: url(Azonix-1VB0.otf);
+}
+
+
+.arriba{
+    font-family: "Azonix";
+    background-color: rgb(236, 208, 165);
+    text-align: left;
+    border: 8px solid rgba(0, 0, 0, 0.356);
+    padding: 5px;
+}
+
+.abajo{
+    font-family: "Azonix";
+    background:url("image/fondo.jpg");
+    padding-block: 50px;
+
+}
+
+h1{
+    text-align: center;
+    font-size: 705px;
+    margin: auto;
+}
+
+h5{
+    text-align: center;
+    font-size: 45px;
+    margin: auto;
+}
+
+
+
+#notfound{
+    text-align: center;
+    font-size: 35px;
+    margin: auto;
+}
