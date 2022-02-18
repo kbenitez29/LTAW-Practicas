@@ -3,38 +3,42 @@
     src: url(Azonix-1VB0.otf);
 }
 
-
 .arriba{
     font-family: "Azonix";
     background-color: rgb(236, 208, 165);
-    text-align: left;
+    text-align: center;
     border: 8px solid rgba(0, 0, 0, 0.356);
     padding: 5px;
 }
+
 
 .abajo{
     font-family: "Azonix";
     background:url("image/fondo.jpg");
     padding-block: 50px;
-
 }
 
 h1{
     text-align: center;
-    font-size: 705px;
+    font-size: 75px;
     margin: auto;
 }
+
 
 h5{
     text-align: center;
-    font-size: 45px;
+    font-size: 15px;
     margin: auto;
 }
 
-
+#inicio{
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+}
 
 #notfound{
     text-align: center;
-    font-size: 35px;
+    padding: 20px;
     margin: auto;
 }
