@@ -3,7 +3,6 @@
     src: url(Azonix-1VB0.otf);
 }
 
-
 .arriba{
     font-family: "Azonix";
     background-color: rgb(236, 208, 165);
@@ -12,17 +11,6 @@
     padding: 5px;
 }
 
-h1{
-    text-align: center;
-    font-size: 75px;
-    margin: auto;
-}
-
-h2{
-    text-align: center;
-    font-size: 35px;
-    margin: auto;
-}
 
 .abajo{
     font-family: "Azonix";
@@ -30,32 +18,50 @@ h2{
     padding-block: 50px;
 }
 
-#contacto{
-    margin-left: 20px;
-    display: inline-block;
+h1{
+    text-align: center;
+    font-size: 75px;
+    margin: auto;
 }
 
-#cesta{
-    display: inline-block;
-    margin-left: 1700px ;
+h4{
+    text-align: center;
+    font-size: 40px;
 }
 
-#apple{
-    margin-top: 50px;
-    margin-left: 200px;
-    margin-bottom: 20px;
+h5{
+    text-align: center;
+    font-size: 15px;
+    margin: auto;
+}
+
+#inicio{
+    text-align: center;
+    margin: auto;
+    padding: 5px;
+}
+
+#galaxy22{
+    margin-left: 280px;
     display: inline-block;
     text-align: center;
 }
 
-#samsung{
-    margin-left: 370px;
+
+#galaxy21{
+    margin-left: 600px;
     display: inline-block;
     text-align: center;
 }
 
-#huawei{
-    margin-left: 400px;
+#fold{
+    margin-left: 310px;
+    display: inline-block;
+    text-align: center;
+}
+
+#flip{
+    margin-left: 550px;
     display: inline-block;
     text-align: center;
 }
