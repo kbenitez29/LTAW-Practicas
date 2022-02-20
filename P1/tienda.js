@@ -38,13 +38,21 @@ const server = http.createServer((req, res)=>{
     //     page = pagina_error;
     // }
 
-    //-- Generar la respusta en función de las variables
-    //-- code, code_msg y page
-    res.statusCode = code;
-    res.statusMessage = code_msg;
-    res.setHeader('Content-Type','text/html');
-    res.write(file);
-    res.end();
+  
+
+    //-- Realizar la lectura asíncrona de los ficheros solicitados por cliente
+    // la lectura se da en data y si hay error en err
+    fs.readFile(file,(err, data) => {
+          //-- Generar la respusta en función de las variables
+        //-- code, code_msg y page
+        res.statusCode = code;
+        res.statusMessage = code_msg;
+        res.setHeader('Content-Type','text/html');
+        res.write(file);
+        res.end();
+
+    
+    });
 });
 
 //-- Arrancar el servidor
