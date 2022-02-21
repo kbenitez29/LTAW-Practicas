@@ -1,3 +1,6 @@
+// FALLA EL CSS EN OTROS NAVEGADORES QUE NO SEAN FIREFOX NOSE XQ
+
+
 //-- Modulos
 const http = require('http');
 const url = require('url');
@@ -6,13 +9,15 @@ const fs = require('fs');
 //-- Puerto del servidor
 const PUERTO = 9090;
 
-//-- Tipos de cuerpo presentes(mime) para indicar en la cabecera
+//-- Tipos de cuerpo presentes (mime) para indicar en la cabecera
 const mime = {
     'html' : 'text/html',
     'css'  : 'text/css',
     'js'   : 'text/javascript',
     'otf'  : 'application/x-font-opentype',
     'jpg'  : 'image/jpeg',
+    'JPG'  : 'image/jpeg',
+    'PNG'  : 'image/png',
     'png'  : 'image/png',
     'gif'  : 'image/gif',
     'ico'  : 'image/x-icon'
@@ -22,64 +27,66 @@ const mime = {
 const server = http.createServer((req, res)=>{
     console.log("Petición recibida!");
 
-    //-- Valores de la respuesta por defecto
+    //-- Valor de la respuesta por defecto
     let code = 200;
-    //let code_msg = "OK";
-    //let page = pagina_main;
 
     //-- Obtiene los distintos campos (recursos)(req.url) de la URL (parse) de la solicitud
     let myUrl = url.parse(req.url, true);
-    console.log('Recurso solicitado:', myUrl.pathname);
+    console.log('Ruta: ', myUrl.pathname);
 
     //-- Variable para alamcenar el archivo solicitado
-    let file = ''
+    let file = '';
 
-    //-- Recurso raiz, devuelve el main 
+    //-- Solicita el recurso raiz, devuelve el main 
     if (myUrl.pathname == '/') {
-        file += 'main.html'
-    // Si no es recurso raiz devuelve la ruta que se pida
-    } else{
-        //-- Separa el recurso por / y coge el primer elemento
-        file += myUrl.pathname
-        console.log('Recurso:',file)
+        file += 'main.html';
+
+    //-- No es recurso raiz, devuelve la ruta solicitada
+    }else{
+
+        //-- Separa el recurso por '/' 
+        let resSplit = myUrl.pathname.split("/");
+
+        //-- El recurso solicitado se encuentra en la carpeta image
+        if (resSplit[1] == 'image'){
+
+            //-- Se recompone la ruta del archivo para la lectura asincrona
+            file += 'image/' + resSplit[2];
+            console.log('Recurso solicitado:', resSplit[2]);
+
+        //-- El recurso no se encuentra dentro de ninguna carpeta
+        } else{
+            file += resSplit[1];
+            console.log('Recurso solicitado:', file);
+        }
+        
     }
 
-    //-- Cualquier recurso que no sea la página principal
-    //-- genera un error
-    // if (url.pathname != '/') {
-    //     code = 404;
-    //     code_msg = "Not Found";
-    //     page = pagina_error;
-    // }
-
     //-- Definimos la seleccion del tipo mime a utilizar en funcion del recurso (archivo) solicitado
-    mimeSel = file.split(".")[1]
-    mimeType = mime[mimeSel]
+    //mimeSel = file.split(".")[1]
+    //mimeType = mime[mimeSel]
 
-    //-- Realizar la lectura asíncrona de los ficheros solicitados por cliente
-    // la lectura se da en data y si hay error en err
+    //-- Realizar la lectura asíncrona de los ficheros solicitados por el cliente
+    //-- la lectura se da en 'data' y si hay error en 'err'
     fs.readFile(file,(err, data) => {
 
-        //--Si hay error en lectura del archivo o no existe
-        // if (err){
-        //     data = 'error.html'
-        //     code = 404;
-        //     res.writeHead(code, {'Content-Type' : mimeType});
-            
+        //-- Hay error en lectura del archivo, no existe o el archivo a acceder es 'error.html'
+        if ((err) || (file == 'error.html')){
 
-        //}else{
-            //--Si no hay nigun error
+            //-- Leemos y cargamos el archivo 'error.html' como respuesta de forma sincrona
+            data = fs.readFileSync("error.html");
+            res.writeHead(404, {'Content-Type' : mime});
+            console.log("Respuesta: 404 Not found\n");
             
-            //-- Generar la respusta en función de las variables
-            //-- code, code_msg y page
-            //res.statusCode = code;
-            //res.statusMessage = code_msg;
-            res.setHeader('Content-Type', mimeType);
-           
-        //}
+        }else{
+            //-- No hay ningun error
+            res.writeHead(code,{'Content-Type' : mime});
+            console.log("Respuesta: 200 OK\n");
+        }
+
+        //-- Devuelve al cliente los recursos solcitados
         res.write(data);
         res.end();
-
     });
 });
 
