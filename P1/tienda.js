@@ -63,8 +63,8 @@ const server = http.createServer((req, res)=>{
     }
 
     //-- Definimos la seleccion del tipo mime a utilizar en funcion del recurso (archivo) solicitado
-    //mimeSel = file.split(".")[1]
-    //mimeType = mime[mimeSel]
+    mimeSel = file.split(".")[1]
+    mimeType = mime[mimeSel]
 
     //-- Realizar la lectura asíncrona de los ficheros solicitados por el cliente
     //-- la lectura se da en 'data' y si hay error en 'err'
@@ -75,12 +75,15 @@ const server = http.createServer((req, res)=>{
 
             //-- Leemos y cargamos el archivo 'error.html' como respuesta de forma sincrona
             data = fs.readFileSync("error.html");
-            res.writeHead(404, {'Content-Type' : mime});
+         
+            res.writeHead(404, {'Content-Type' : mimeType});
+            console.log('Tipo mime:' , mimeType)
             console.log("Respuesta: 404 Not found\n");
             
         }else{
             //-- No hay ningun error
-            res.writeHead(code,{'Content-Type' : mime});
+            res.writeHead(code,{'Content-Type' : mimeType});
+            console.log('Tipo mime:' , mimeType)
             console.log("Respuesta: 200 OK\n");
         }
 
