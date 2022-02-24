@@ -1,5 +1,5 @@
 //-- Funcion a utilizar en archivos .html
-function main() {
+function sound() {
     //-- Identificacion de imagenes
     let apple = document.getElementById("apLogo");
     let samsung = document.getElementById("samLogo");

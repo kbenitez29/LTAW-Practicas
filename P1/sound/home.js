@@ -1,5 +1,5 @@
 //-- Funcion a utilizar en archivos .html
-function main() {
+function home() {
     //-- Identificacion de imagenes
     let home = document.getElementById("inicio");
 
