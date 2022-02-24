@@ -17,7 +17,9 @@ const mime = {
     'PNG'  : 'image/png',
     'png'  : 'image/png',
     'gif'  : 'image/gif',
-    'ico'  : 'image/x-icon'
+    'ico'  : 'image/x-icon',
+    'MP3'  : 'audio/mpeg3',
+    'mp3'  : 'audio/mpeg3',
 }
 
 //-- Creacion del servidor
@@ -51,6 +53,13 @@ const server = http.createServer((req, res)=>{
             file += 'image/' + resSplit[2];
             console.log('Recurso solicitado:', resSplit[2]);
 
+        //-- El recurso solicitado se encuentra en la carpeta sound
+        }else if(resSplit[1] == 'sound'){
+            
+            //-- Se recompone la ruta del archivo para la lectura asincrona
+            file += 'sound/' + resSplit[2];
+            console.log('Recurso solicitado:', resSplit[2]);
+
         //-- El recurso no se encuentra dentro de ninguna carpeta
         } else{
             file += resSplit[1];
@@ -76,8 +85,8 @@ const server = http.createServer((req, res)=>{
             //-- Leemos y cargamos el archivo 'error.html' como respuesta de forma sincrona
             data = fs.readFileSync("error.html");
             
-            //-- Cabeceras de error
-            res.writeHead(404, {'Content-Type' : mimeType});
+            //-- Cabeceras de error, pagina desconocida
+            res.writeHead(404, {'Content-Type': 'text/html'});
             console.log('Tipo mime:' , mimeType)
             console.log("Respuesta: 404 Not found\n");
             
