@@ -1,0 +1,46 @@
+[
+    {
+        "productos": [
+            {
+                "nombre": "fuet",
+                "stock": 4
+            },
+            {
+                "nombre": "chistorra",
+                "stock": 3
+            },
+            {
+                "nombre": "jamon",
+                "stock": 4
+            }
+        ]
+    },
+    {
+        "usuarios":[
+            {
+                "user": "delgado",
+                "nombre": "emilio"
+            
+            },
+            {
+                "user": "cuesta",
+                "nombre": "juan"
+            }
+        ]
+    },
+    {
+        "pedidos":[
+            {
+                "user": "cuesta",
+                "productos":[
+                    {
+                        "producto": "fuet"
+                    },
+                    {
+                        "producto": "chistorra"
+                    }
+                ]
+            }
+        ]
+    }
+]
