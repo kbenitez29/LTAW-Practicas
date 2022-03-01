@@ -3,7 +3,6 @@
     src: url(Azonix-1VB0.otf);
 }
 
-
 .arriba{
     font-family: "Azonix";
     background-color: rgb(236, 208, 165);
@@ -27,7 +26,7 @@ h2{
 .abajo{
     font-family: "Azonix";
     background:url("image/fondo.jpg");
-    padding-block: 50px;
+    padding-block: 53px;
 }
 
 #contacto{

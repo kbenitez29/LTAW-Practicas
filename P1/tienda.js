@@ -1,6 +1,3 @@
-// FALLA EL CSS EN OTROS NAVEGADORES QUE NO SEAN FIREFOX NOSE XQ
-
-
 //-- Modulos
 const http = require('http');
 const url = require('url');
@@ -20,7 +17,9 @@ const mime = {
     'PNG'  : 'image/png',
     'png'  : 'image/png',
     'gif'  : 'image/gif',
-    'ico'  : 'image/x-icon'
+    'ico'  : 'image/x-icon',
+    'MP3'  : 'audio/mpeg3',
+    'mp3'  : 'audio/mpeg3',
 }
 
 //-- Creacion del servidor
@@ -54,6 +53,13 @@ const server = http.createServer((req, res)=>{
             file += 'image/' + resSplit[2];
             console.log('Recurso solicitado:', resSplit[2]);
 
+        //-- El recurso solicitado se encuentra en la carpeta sound
+        }else if(resSplit[1] == 'sound'){
+            
+            //-- Se recompone la ruta del archivo para la lectura asincrona
+            file += 'sound/' + resSplit[2];
+            console.log('Recurso solicitado:', resSplit[2]);
+
         //-- El recurso no se encuentra dentro de ninguna carpeta
         } else{
             file += resSplit[1];
@@ -62,9 +68,11 @@ const server = http.createServer((req, res)=>{
         
     }
 
-    //-- Definimos la seleccion del tipo mime a utilizar en funcion del recurso (archivo) solicitado
-    mimeSel = file.split(".")[1]
-    mimeType = mime[mimeSel]
+    //-- Separa la extension del recurso solicitado
+    let mimeSel = file.split(".")[1]
+
+    //-- Definimos la seleccion del tipo mime a utilizar en funcion de la extension del recurso (archivo) solicitado
+    let mimeType = mime[mimeSel]
     
 
     //-- Realizar la lectura asíncrona de los ficheros solicitados por el cliente
@@ -76,7 +84,9 @@ const server = http.createServer((req, res)=>{
 
             //-- Leemos y cargamos el archivo 'error.html' como respuesta de forma sincrona
             data = fs.readFileSync("error.html");
-            res.writeHead(404, {'Content-Type' : mimeType});
+            
+            //-- Cabeceras de error, pagina desconocida
+            res.writeHead(404, {'Content-Type': 'text/html'});
             console.log('Tipo mime:' , mimeType)
             console.log("Respuesta: 404 Not found\n");
             
