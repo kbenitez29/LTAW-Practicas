@@ -34,10 +34,10 @@
                 "user": "cuesta",
                 "productos":[
                     {
-                        "producto": "fuet"
+                        "nombre": "fuet"
                     },
                     {
-                        "producto": "chistorra"
+                        "nombre": "chistorra"
                     }
                 ]
             }
