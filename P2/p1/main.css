@@ -1,0 +1,60 @@
+@font-face{
+    font-family: "Azonix";
+    src: url(Azonix-1VB0.otf);
+}
+
+.arriba{
+    font-family: "Azonix";
+    background-color: rgb(236, 208, 165);
+    text-align: center;
+    border: 8px solid rgba(0, 0, 0, 0.356);
+    padding: 5px;
+}
+
+h1{
+    text-align: center;
+    font-size: 75px;
+    margin: auto;
+}
+
+h2{
+    text-align: center;
+    font-size: 35px;
+    margin: auto;
+}
+
+.abajo{
+    font-family: "Azonix";
+    background:url("image/fondo.jpg");
+    padding-block: 53px;
+}
+
+#contacto{
+    margin-left: 20px;
+    display: inline-block;
+}
+
+#cesta{
+    display: inline-block;
+    margin-left: 1700px ;
+}
+
+#apple{
+    margin-top: 50px;
+    margin-left: 200px;
+    margin-bottom: 20px;
+    display: inline-block;
+    text-align: center;
+}
+
+#samsung{
+    margin-left: 370px;
+    display: inline-block;
+    text-align: center;
+}
+
+#huawei{
+    margin-left: 400px;
+    display: inline-block;
+    text-align: center;
+}

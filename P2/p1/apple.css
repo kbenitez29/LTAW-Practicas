@@ -1,0 +1,81 @@
+@font-face{
+    font-family: "Azonix";
+    src: url(Azonix-1VB0.otf);
+}
+
+.arriba{
+    font-family: "Azonix";
+    background-color: rgb(236, 208, 165);
+    text-align: center;
+    border: 8px solid rgba(0, 0, 0, 0.356);
+    padding: 5px;
+}
+
+
+.abajo{
+    font-family: "Azonix";
+    background:url("image/fondo.jpg");
+    padding-block: 53px;
+}
+
+h1{
+    text-align: center;
+    font-size: 75px;
+    margin: auto;
+}
+
+
+h4{
+    text-align: center;
+    font-size: 40px;
+}
+
+
+h5{
+    text-align: center;
+    font-size: 15px;
+    margin: auto;
+}
+
+#inicio{
+    text-align: center;
+    margin: auto;
+    padding: 5px;
+}
+
+#ip13pro{
+    margin-left: 400px;
+    display: inline-block;
+    text-align: center;
+}
+
+
+#ip13{
+    margin-left: 600px;
+    display: inline-block;
+    text-align: center;
+}
+
+#ip12{
+    margin-left: 400px;
+    display: inline-block;
+    text-align: center;
+}
+
+#se{
+    margin-left: 550px;
+    display: inline-block;
+    text-align: center;
+}
+
+#ip11{
+    margin-left: 400px;
+    display: inline-block;
+    text-align: center;
+}
+
+#air{
+    margin-left: 550px;
+    display: inline-block;
+    text-align: center;
+}

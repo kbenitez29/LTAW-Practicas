@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="samsung.css">
+    <script type="text/javascript" src="sound/home.js"></script>
+    <link rel="icon" href="image/favicon.ico">
+    <title>Samsung</title>
+</head>
+<body onload="home()">
+    <div class="arriba">
+        <img src="image/logo.png" id="logo">
+        <h1 id="logo">La casa del móvil</h1>
+    </div>
+    <div class="abajo">
+        <div id="inicio">
+            <img src="image/inicio.png" id="inicio" width="45px" height="45px">
+            <a href="main.html"><h5>Inicio</h5></a>
+        </div>
+        <div id="cesta">
+            <img src="image/cesta.png" id="error" width="40px" height="40px">
+            <a href="error.html"><h5>Cesta</h5></a>
+        </div>
+
+        <div id="nombre">
+            <h4>Samsung Galaxy S22</h4>
+        </div>
+        
+        <div id="galaxy22">
+            <img src="image/galaxy22.png" width="800px" height="550px">
+        </div>
+
+        <div id="descripcion">   
+            <h3>Descripción</h3>
+        </div>
+            
+        <div id="precio">
+            <h2>Precio</h2>
+        </div>
+        
+        <div id="add">
+            <form action="/add_iph" method="get">
+                <input id="addb" type="submit" value="ADD"/>
+            </form>
+        </div>
+
+    </div>
+    <audio src="sound/home.mp3" id="inAudio"></audio>
+    <audio src="sound/money.mp3" id="monAudio"></audio>
+</body>
+</html>

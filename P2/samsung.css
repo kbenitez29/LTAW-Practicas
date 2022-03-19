@@ -1,0 +1,71 @@
+@font-face{
+    font-family: "Azonix";
+    src: url(Azonix-1VB0.otf);
+}
+
+.arriba{
+    font-family: "Azonix";
+    background-color: rgb(236, 208, 165);
+    text-align: center;
+    border: 8px solid rgba(0, 0, 0, 0.356);
+    padding: 5px;
+}
+
+
+.abajo{
+    font-family: "Azonix";
+    background:url("image/fondo.jpg");
+    padding-block: 53px;
+}
+
+h1{
+    text-align: center;
+    font-size: 75px;
+    margin: auto;
+}
+
+h4{
+    text-align: center;
+    font-size: 40px;
+}
+
+h5{
+    text-align: right;
+    font-size: 15px;
+    margin: auto;
+    padding: 10px;
+}
+
+#inicio{
+    text-align: left;
+    padding: 5px;
+    display: inline-block;
+    margin-left: 455px;
+}
+#cesta{
+    display: inline-block;
+    text-align: center;
+    margin-left: 700px;
+}
+
+
+#galaxy22{
+    display: inline-block;
+    text-align: center;
+}
+
+#descripcion{
+    display: inline-block;
+}
+
+#precio{
+    
+}
+
+#addb{
+    padding: 20px; 
+    background-color: rgb(236, 208, 165);
+    color: #000000; 
+    font-family: 'Azonix';
+    border-radius: 50px;
+}
