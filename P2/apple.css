@@ -24,6 +24,13 @@ h1{
     margin: auto;
 }
 
+h2{
+    font-size: 25px;
+}
+
+h3{
+    font-size: 28px;
+}
 
 h4{
     text-align: center;
@@ -61,10 +68,16 @@ h5{
 
 #descripcion{
     display: inline-block;
+    position: absolute;
+    left: 35%;
+    bottom: 19%;
 }
 
 #precio{
-    
+    bottom: 8%;
+    text-align: center;
+    position: absolute;
+    left: 35%;
 }
 
 #addb{
@@ -73,4 +86,6 @@ h5{
     color: #000000; 
     font-family: 'Azonix';
     border-radius: 50px;
+    font-size: 20px;
+    margin-left: 350px;
 }
