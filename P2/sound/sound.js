@@ -6,6 +6,7 @@ function sound() {
     let huawei = document.getElementById("huLogo");
     let money = document.getElementById("error");
     let ring = document.getElementById("contacto");
+    let login = document.getElementById("login");
 
     //-- Audios a utilizar
     let appleAudio = document.getElementById("apAudio");
@@ -13,6 +14,7 @@ function sound() {
     let huaweiAudio = document.getElementById("huAudio");
     let moneyAudio = document.getElementById("monAudio");
     let ringAudio = document.getElementById("ringAudio");
+    let loginAudio = document.getElementById("loginAudio");
 
     apple.onmouseover = () => {
         appleAudio.play();
@@ -33,5 +35,10 @@ function sound() {
     ring.onmouseover = () => {
         ringAudio.play();
     }
+
+    login.onmouseover = () => {
+        loginAudio.play();
+    }
+
 
 }
