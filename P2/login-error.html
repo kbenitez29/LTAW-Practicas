@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="login-error.css">
     <script type="text/javascript" src="sound/home.js"></script>
     <link rel="icon" href="image/favicon.ico">
-    <title>Login</title>
+    <title>La casa del móvil</title>
 </head>
 <body onload="home()">
     <div class="arriba">
@@ -21,21 +21,8 @@
         </div>
 
         <div id="box">
-            <form action="/procesar" method="get">
-                <div id='nombre'>
-                    Nombre de usuario:
-                    <input type="text" name="nombre"/>
-                    <p></p>
-                </div>
-                <div id="passw">
-                    Password:
-                    <input type="password" name="passw" />
-                    <p></p>
-                </div>
-                <div id="send">
-                    <input id="sendButt" type="submit" value="Iniciar sesión"/>
-                </div>
-            </form>
+            <h2>¡ERROR!</h2>
+            <p>Nombre de usuario o password incorrectos</p>
         </div>
     </div>
     <audio src="sound/home.mp3" id="inAudio"></audio>

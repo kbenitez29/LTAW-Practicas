@@ -22,9 +22,9 @@ body{
     padding-block: 53px;
 }
 
-h1{
+h2{
     text-align: center;
-    font-size: 75px;
+    font-size: 40px;
     margin: auto;
 }
 
@@ -35,6 +35,10 @@ h5{
     padding: 10px;
 }
 
+p{
+    padding: 10px;
+    text-align: center;   
+}
 
 #inicio{
     text-align: left;
@@ -50,7 +54,7 @@ h5{
     padding: 35px;
     
     width: 400px;       
-    height: 125px;
+    height: 115px;
     position: absolute;
     top:70%;
     left: 42.5%;           
