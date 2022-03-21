@@ -1,0 +1,80 @@
+@font-face{
+    font-family: "Azonix";
+    src: url(Azonix-1VB0.otf);
+}
+
+.arriba{
+    font-family: "Azonix";
+    background-color: rgb(236, 208, 165);
+    text-align: center;
+    border: 8px solid rgba(0, 0, 0, 0.356);
+    padding: 5px;
+}
+
+body{
+    background:url("image/fondo.jpg");
+    
+}
+
+.abajo{
+    font-family: "Azonix";
+    background:url("image/fondo.jpg");
+    padding-block: 53px;
+}
+
+h1{
+    text-align: center;
+    font-size: 75px;
+    margin: auto;
+}
+
+h5{
+    text-align: right;
+    font-size: 15px;
+    margin: auto;
+    padding: 10px;
+}
+
+
+#inicio{
+    text-align: left;
+    padding: 8px;
+    display: inline-block;
+    margin-left: 455px;
+}
+
+#box{
+    background-color: rgb(245, 227, 200);
+    border: 8px solid rgba(0, 0, 0, 0.356);
+    opacity: 80%;
+    padding: 35px;
+    
+    width: 400px;       
+    height: 125px;
+    position: absolute;
+    top:70%;
+    left: 42.5%;           
+    margin-top: -100px;
+    margin-left: -100px;
+}
+
+#carrito{
+    text-align: center;
+    padding: 8px;
+    margin-top: 280px;
+    
+}
+
+#sendButt{
+    padding: 12px; 
+    background-color: rgb(236, 208, 165);
+    color: #000000; 
+    font-family: 'Azonix';
+    border-radius: 50px;
+    font-size: 20px;
+    margin-left: 80px;
+}
+
+#sendButt:hover{
+    background-color: rgb(241, 226, 204);
+}
