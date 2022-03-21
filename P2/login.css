@@ -50,10 +50,10 @@ h5{
     padding: 35px;
     
     text-align: center;
-    width: 400px;       
+    width: 430px;       
     height: 125px;
     position: absolute;
-    top:70%;
+    top:80%;
     left: 42.5%;           
     margin-top: -100px;
     margin-left: -100px;
@@ -68,7 +68,6 @@ h5{
     font-family: 'Azonix';
     border-radius: 50px;
     font-size: 20px;
-    
     text-align: center;
 }
 

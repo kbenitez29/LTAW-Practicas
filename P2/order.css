@@ -49,11 +49,12 @@ h5{
     opacity: 80%;
     padding: 50px;
     
+    text-align: center;
     width: 400px;       
     height: 125px;
     position: absolute;
-    top:70%;
-    left: 42.5%;           
+    top:80%;
+    left: 42%;           
     margin-top: -100px;
     margin-left: -100px;
 }
@@ -61,7 +62,7 @@ h5{
 #carrito{
     text-align: center;
     padding: 8px;
-    margin-top: 280px;
+    margin-top: 300px;
     
 }
 
@@ -72,7 +73,7 @@ h5{
     font-family: 'Azonix';
     border-radius: 50px;
     font-size: 20px;
-    margin-left: 80px;
+    text-align: center;
 }
 
 #sendButt:hover{
