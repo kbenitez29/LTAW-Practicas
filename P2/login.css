@@ -68,6 +68,10 @@ h5{
     font-family: 'Azonix';
     border-radius: 50px;
     font-size: 20px;
+<<<<<<< HEAD
+=======
+    text-align: center;
+>>>>>>> 8a475b68dbeae2697a33cfe2d5e1dbe5c4fabb93
 }
 
 #sendButt:hover{
