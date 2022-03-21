@@ -53,10 +53,11 @@ p{
     opacity: 80%;
     padding: 35px;
     
+    text-align: center; 
     width: 400px;       
     height: 115px;
     position: absolute;
-    top:70%;
+    top:80%;
     left: 42.5%;           
     margin-top: -100px;
     margin-left: -100px;
