@@ -49,19 +49,16 @@ h5{
     opacity: 80%;
     padding: 35px;
     
-    width: 400px;       
+    text-align: center;
+    width: 430px;       
     height: 125px;
     position: absolute;
-    top:70%;
+    top:80%;
     left: 42.5%;           
     margin-top: -100px;
     margin-left: -100px;
 }
 
-
-#passw{
-    margin-left: 50px;
-}
 
 
 #sendButt{
@@ -71,7 +68,6 @@ h5{
     font-family: 'Azonix';
     border-radius: 50px;
     font-size: 20px;
-    margin-left: 100px;
 }
 
 #sendButt:hover{
