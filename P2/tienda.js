@@ -6,6 +6,42 @@ const fs = require('fs');
 //-- Puerto del servidor
 const PUERTO = 9090;
 
+// Leemos los ficheros de forma sincrona
+
+// Pagina principal
+const main = fs.readFileSync('main.html','utf-8');
+
+// Pagina error
+const error = fs.readFileSync('error.html','utf-8');
+
+// Paginas de productos
+const apple = fs.readFileSync('apple.html','utf-8');
+const samsung = fs.readFileSync('samsung.html','utf-8');
+const huawei = fs.readFileSync('huawei.html','utf-8');
+
+// Paginas de login
+const login = fs.readFileSync('login.html','utf-8');
+const login_resp = fs.readFileSync('login-resp.html','utf-8');
+const login_error = fs.readFileSync('login-error.html','utf-8');
+const unlogged = fs.readFileSync('unloged.html','utf-8');
+
+// Paginas de procesamiento del pedido
+const order = fs.readFileSync('order.html','utf-8');
+const order_resp = fs.readFileSync('order-resp.html','utf-8');
+
+// Ficheros JSON y lectura
+const FICHERO_JSON = "tienda.json";
+
+//-- NOmbre del fichero JSON de salida
+const FICHERO_JSON_OUT = "tienda-modificacion.json"
+
+//-- Leer el fichero JSON
+const  tienda_json = fs.readFileSync(FICHERO_JSON);
+
+//-- Crear la estructura tienda a partir del contenido del fichero
+const tienda = JSON.parse(tienda_json);
+
+
 //-- Tipos de cuerpo presentes (mime) para indicar en la cabecera
 const mime = {
     'html' : 'text/html',
