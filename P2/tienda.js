@@ -8,31 +8,31 @@ const PUERTO = 9090;
 
 // Leemos los ficheros de forma sincrona
 
-// Pagina principal
+// Página principal
 const main = fs.readFileSync('main.html','utf-8');
 
-// Pagina error
+// Página error
 const error = fs.readFileSync('error.html','utf-8');
 
-// Paginas de productos
+// Páginas de productos
 const apple = fs.readFileSync('apple.html','utf-8');
 const samsung = fs.readFileSync('samsung.html','utf-8');
 const huawei = fs.readFileSync('huawei.html','utf-8');
 
-// Paginas de login
+// Páginas de login
 const login = fs.readFileSync('login.html','utf-8');
 const login_resp = fs.readFileSync('login-resp.html','utf-8');
 const login_error = fs.readFileSync('login-error.html','utf-8');
 const unlogged = fs.readFileSync('unloged.html','utf-8');
 
-// Paginas de procesamiento del pedido
+// Páginas de procesamiento del pedido
 const order = fs.readFileSync('order.html','utf-8');
 const order_resp = fs.readFileSync('order-resp.html','utf-8');
 
 // Ficheros JSON y lectura
 const FICHERO_JSON = "tienda.json";
 
-//-- NOmbre del fichero JSON de salida
+//-- Nombre del fichero JSON de salida
 const FICHERO_JSON_OUT = "tienda-modificacion.json"
 
 //-- Leer el fichero JSON
@@ -40,7 +40,6 @@ const  tienda_json = fs.readFileSync(FICHERO_JSON);
 
 //-- Crear la estructura tienda a partir del contenido del fichero
 const tienda = JSON.parse(tienda_json);
-
 
 //-- Tipos de cuerpo presentes (mime) para indicar en la cabecera
 const mime = {
@@ -57,6 +56,44 @@ const mime = {
     'MP3'  : 'audio/mpeg3',
     'mp3'  : 'audio/mpeg3',
 }
+
+
+//-- Analizar la cookie y devolver el nombre del
+//-- usuario si existe, o null en caso contrario
+function get_user(req) {
+
+    //-- Leer la Cookie recibida
+    const cookie = req.headers.cookie;
+  
+    //-- Hay cookie
+    if (cookie) {
+      
+      //-- Obtener un array con todos los pares nombre-valor
+      let pares = cookie.split(";");
+      
+      //-- Variable para guardar el usuario
+      let user;
+  
+      //-- Recorrer todos los pares nombre-valor
+      pares.forEach((element, index) => {
+  
+        //-- Obtener los nombres y valores por separado
+        let [nombre, valor] = element.split('=');
+  
+        //-- Leer el usuario
+        //-- Solo si el nombre es 'user'
+        if (nombre.trim() === 'user') {
+          user = valor;
+        }
+      });
+  
+      //-- Si la variable user no está asignada
+      //-- se devuelve null
+      return user || null;
+    }
+  }
+
+  
 
 //-- Creacion del servidor
 const server = http.createServer((req, res)=>{
