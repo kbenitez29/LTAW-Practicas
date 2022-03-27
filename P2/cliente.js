@@ -40,7 +40,7 @@ caja.oninput = () => {
 
                     //-- Separamos los productos por ',''
                     if (i < productos.length-1) {
-                    display1.innerHTML += ', ';
+                    display1.innerHTML += '<br>';
                     }
                 }
 

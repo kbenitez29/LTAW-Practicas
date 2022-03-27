@@ -58,6 +58,120 @@ const mime = {
 }
 
 
+//-- Crear la cookie del producto 
+//-- si se añade al carrito
+function make_cookie_cart(req, res, product) {
+
+    //-- Leer la Cookie recibida
+    const cookie = req.headers.cookie;
+  
+    //-- Hay cookie
+    if (cookie) {
+      
+      //-- Obtener un array con todos los pares nombre-valor
+      let pares = cookie.split(";");
+      
+      //-- Recorrer todos los pares nombre-valor
+      pares.forEach((element, index) => {
+  
+        //-- Obtener los nombres y valores por separado
+        let [nombre, valor] = element.split('=');
+  
+        //-- Establece cookie si el nombre es "cart"
+        if (nombre.trim() === 'cart') {
+            res.setHeader('Set-Cookie', element + ':' + product);
+        }
+      });
+  
+    }
+}
+
+//-- Analizar la cookie y devolver productos del 
+//-- carrito si existe, o null en caso contrario
+function get_cart(req){
+
+    //-- Leer la Cookie recibida
+    const cookie = req.headers.cookie;
+    
+    //-- Hay cookie
+    if (cookie){
+        
+      //-- Obtener un array con todos los pares nombre-valor
+      let pares = cookie.split(";");
+  
+      //-- Definir las variables relacionadas a los productos y carrito
+      let cart;
+      let apple = '';
+      let samsung = '';
+      let huawei = '';
+
+      let nApple = 0;
+      let nSamsung = 0;
+      let nHuawei = 0;
+  
+      //-- Recorrer todos los pares nombre-valor
+      pares.forEach((element, index) => {
+
+        //-- Obtener los nombre y los valores por separado
+        let [nombre, valor] = element.split('=');
+  
+        //-- Si el nombre es cart
+        if (nombre.trim() === 'cart') {
+
+          products = valor.split(',');
+
+          products.forEach((product) => {
+
+            //-- Definimos los productos de cada marca y su cantidad en el carrito
+            if (product == 'apple'){
+
+              if (nApple == 0) {
+                apple = 'Iphone 13 Pro';
+              }
+
+              nApple += 1;
+            } else if (product == 'samsung'){
+
+              if (nSamsung == 0){
+
+                samsung = 'Samsung Galaxy S22';
+              }
+
+              nSamsung += 1;
+            } else if (product == 'huawei'){
+
+              if (nHuawei == 0){
+
+                huawei = 'Huawei Mate 40 Pro';
+              }
+
+                nHuawei += 1;
+            }
+          });
+  
+          //-- Informacion a mostrar en el carrito
+          if (nApple != 0) {
+
+            apple += ': ' + nApple;
+          }
+          if (nSamsung != 0) {
+
+            samsung += ': ' + nSamsung;
+          }
+          if (nHuawei != 0) {
+
+            huawei += ': ' + nHuawei;
+          }
+
+          cart = apple + '<br>' + samsung + '<br>' + huawei;
+        }
+      });
+  
+      //Si esta vacío se devuelve null
+      return cart || null;
+    }
+  }
+
 //-- Analizar la cookie y devolver el nombre del
 //-- usuario si existe, o null en caso contrario
 function get_user(req) {
@@ -91,43 +205,9 @@ function get_user(req) {
       //-- se devuelve null
       return user || null;
     }
-  }
+}
 
 
-//-- Analizar la cookie y devolver el carrito si existe
-function get_cookie_cart(req, res, product) {
-
-    //-- Leer la Cookie recibida
-    const cookie = req.headers.cookie;
-  
-    //-- Hay cookie
-    if (cookie) {
-      
-      //-- Obtener un array con todos los pares nombre-valor
-      let pares = cookie.split(";");
-      
-      //-- Variable para guardar el usuario
-      let user;
-  
-      //-- Recorrer todos los pares nombre-valor
-      pares.forEach((element, index) => {
-  
-        //-- Obtener los nombres y valores por separado
-        let [nombre, valor] = element.split('=');
-  
-        //-- Leer el usuario
-        //-- Solo si el nombre es 'user'
-        if (nombre.trim() === 'carrito') {
-          user = valor;
-        }
-      });
-  
-      //-- Si la variable user no está asignada
-      //-- se devuelve null
-      return user || null;
-    }
-  }
-  
 
 //-- Creacion del servidor
 const server = http.createServer((req, res)=>{
@@ -139,6 +219,8 @@ const server = http.createServer((req, res)=>{
     //-- Obtiene los distintos campos (recursos)(req.url) de la URL (parse) de la solicitud
     let myUrl = url.parse(req.url, true);
     console.log('Ruta: ', myUrl.pathname);
+    console.log("Método: " + req.method);
+    console.log("Parametros: " + myUrl.searchParams);
 
     //-- Variable para alamcenar el archivo solicitado
     let file = '';
