@@ -41,12 +41,27 @@ const  tienda_json = fs.readFileSync(FICHERO_JSON);
 //-- Crear la estructura tienda a partir del contenido del fichero
 const tienda = JSON.parse(tienda_json);
 
+//-- Productos de tienda
+let prodDescr = [];
+let prodTienda = [];
+console.log("Productos disponibles");
+console.log("---------------------");
+tienda[1]["productos"].forEach((element, index)=>{
+  console.log("Nombre: " + element.nombre +
+              ", Stock: " + element.stock + ", Precio: " + element.precio);
+  prodDescr.push([element.nombre, element.descripcion, element.stock, 
+                       element.precio]);
+  prodTienda.push(element.nombre);
+});
+
 //-- Tipos de cuerpo presentes (mime) para indicar en la cabecera
 const mime = {
     'html' : 'text/html',
     'css'  : 'text/css',
     'js'   : 'text/javascript',
     'otf'  : 'application/x-font-opentype',
+    'json' : 'application/json',
+    'JSON' : 'application/json',
     'jpg'  : 'image/jpeg',
     'JPG'  : 'image/jpeg',
     'PNG'  : 'image/png',
@@ -54,7 +69,7 @@ const mime = {
     'gif'  : 'image/gif',
     'ico'  : 'image/x-icon',
     'MP3'  : 'audio/mpeg3',
-    'mp3'  : 'audio/mpeg3',
+    'mp3'  : 'audio/mpeg3'
 }
 
 
@@ -124,14 +139,12 @@ function get_cart(req){
 
             //-- Definimos los productos de cada marca y su cantidad en el carrito
             if (product == 'apple'){
-
               if (nApple == 0) {
                 apple = 'Iphone 13 Pro';
               }
 
               nApple += 1;
             } else if (product == 'samsung'){
-
               if (nSamsung == 0){
 
                 samsung = 'Samsung Galaxy S22';
@@ -139,7 +152,6 @@ function get_cart(req){
 
               nSamsung += 1;
             } else if (product == 'huawei'){
-
               if (nHuawei == 0){
 
                 huawei = 'Huawei Mate 40 Pro';
@@ -151,15 +163,12 @@ function get_cart(req){
   
           //-- Informacion a mostrar en el carrito
           if (nApple != 0) {
-
             apple += ': ' + nApple;
           }
           if (nSamsung != 0) {
-
             samsung += ': ' + nSamsung;
           }
           if (nHuawei != 0) {
-
             huawei += ': ' + nHuawei;
           }
 
@@ -207,8 +216,6 @@ function get_user(req) {
     }
 }
 
-
-
 //-- Creacion del servidor
 const server = http.createServer((req, res)=>{
     console.log("Petición recibida!");
@@ -221,15 +228,81 @@ const server = http.createServer((req, res)=>{
     console.log('Ruta: ', myUrl.pathname);
     console.log("Método: " + req.method);
     console.log("Parametros: " + myUrl.searchParams);
-
-    //-- Variable para alamcenar el archivo solicitado
+    
+  
+    //-- Variable para almacenar el archivo solicitado
     let file = '';
+
+    //-- Busqueda de elementos
+    let search;
+    let param1;
+
+    //-- Definir user si lo hay
+    let user = get_user(req);
 
     //-- Solicita el recurso raiz, devuelve el main 
     if (myUrl.pathname == '/') {
         file += 'main.html';
 
-    //-- No es recurso raiz, devuelve la ruta solicitada
+    //-- Acceso al formulario de compra
+    }else if (myUrl.pathname == '/order.html'){
+      user = get_user(req);
+    
+        //-- Si existe el usuario 
+        if (user) {
+            file += "order.html";
+        
+        //-- Si no hay cookie de usuario
+        } else {
+            console.log("ERROR!! No se ha iniciado sesión");
+            file += 'unloged.html';
+        }
+  
+
+     //-- Definir la busqueda NO SE QUE COÑO PASA QUE NO FUNCIONA AAAAAAA!!!!
+    } else if(myUrl.pathname == '/productos'){
+          
+      console.log("Peticion de Productos!")
+      mime["json"]
+
+      //Leer los parámetros ERROR AQUI
+      console.log(myUrl.searchParams.get('param1'))
+      param1 = myUrl.searchParams.get('param1');
+
+      param1 = param1.toUpperCase();
+
+      console.log("  Param: " +  param1);
+
+      let result = [];
+
+      for (let prod of prodTienda) {
+
+          //Pasar a mayúsculas
+          prodU = prod.toUpperCase();
+
+          // Si el producto comienza por lo indicado en el parametro
+          //meter este producto en el array de resultados
+          if (prodU.startsWith(param1)) {
+              result.push(prod);
+          }
+          
+      }
+      console.log(result);
+      search = result;
+      file = JSON.stringify(result);
+      
+    
+    //-- Direccionamiento a páginas segun busqueda  
+    }else if (myUrl.pathname == '/buscar') {
+        if (search == "Iphone 13 Pro") {
+            file += 'apple.html';
+        } else if (search == "Samsung Galaxy S22"){
+            file += 'samsung.html';
+        } else if (search == "Huawei Mate 40 Pro") {
+            file += 'huawei.html';
+        }
+
+    //-- No es recurso raiz ni ninguno solicitado, devuelve la ruta solicitada
     }else{
 
         //-- Separa el recurso por '/' 
