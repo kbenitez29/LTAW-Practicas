@@ -53,6 +53,19 @@ tienda[1]["productos"].forEach((element, index)=>{
                        element.precio]);
   prodTienda.push(element.nombre);
 });
+console.log();
+
+//-- Usuarios de tienda
+let regUsers = [];
+let passUsers = [];
+console.log("Usuarios registrados");
+console.log("--------------------");
+tienda[0]["usuarios"].forEach((element, index)=>{
+    console.log("Usuario: " + element.nick);
+    regUsers.push(element.nick);
+    passUsers.push(element.password);
+    console.log("Passwd: " + element.password);
+  });
 
 //-- Tipos de cuerpo presentes (mime) para indicar en la cabecera
 const mime = {
@@ -69,7 +82,8 @@ const mime = {
     'gif'  : 'image/gif',
     'ico'  : 'image/x-icon',
     'MP3'  : 'audio/mpeg3',
-    'mp3'  : 'audio/mpeg3'
+    'mp3'  : 'audio/mpeg3',
+    'undefined' : 'application/json'
 }
 
 
@@ -224,7 +238,7 @@ const server = http.createServer((req, res)=>{
     let code = 200;
 
     //-- Obtiene los distintos campos (recursos)(req.url) de la URL (parse) de la solicitud
-    let myUrl = url.parse(req.url, true);
+    let myUrl = new URL(req.url, 'http://' + req.headers['host']);
     console.log('Ruta: ', myUrl.pathname);
     console.log("Método: " + req.method);
     console.log("Parametros: " + myUrl.searchParams);
@@ -237,12 +251,16 @@ const server = http.createServer((req, res)=>{
     let search;
     let param1;
 
-    //-- Definir user si lo hay
+    //-- Definir user cookie si la hay
     let user = get_user(req);
+
+    //-- Definir datos de usuario
+    let nick;
+    let passwd;
 
     //-- Solicita el recurso raiz, devuelve el main 
     if (myUrl.pathname == '/') {
-        file += 'main.html';
+        file = main;
 
     //-- Acceso al formulario de compra
     }else if (myUrl.pathname == '/order.html'){
@@ -257,16 +275,34 @@ const server = http.createServer((req, res)=>{
             console.log("ERROR!! No se ha iniciado sesión");
             file += 'unloged.html';
         }
-  
+    
+    //-- Llega peticion de login (recurso)
+    }else if (myUrl.pathname == '/login'){
+      nick = myUrl.searchParams.get('nick');
+      passwd = myUrl.searchParams.get('passwd');
 
+      //-- Se comprueba si nick y passwd estan registrados para login correcto
+      if (regUsers.includes(nick) && passUsers.includes(passwd)){
+        console.log('Usuario registrado');
+        //Se asigna la cookie al usuario registrado.
+        res.setHeader('Set-Cookie', "user=" + nick);
+        file += 'login-resp.html';
+        file += login_resp.replace("USER", nick);
+      }else{
+
+        //Si el nick o passwd no están registrados error de login 
+        file += 'login-error.html';
+      }
+
+    
      //-- Definir la busqueda NO SE QUE COÑO PASA QUE NO FUNCIONA AAAAAAA!!!!
+     // CREO QUE ES PORQUE ALGO NO ESTA DEFINIDO Y PETA ALOMEJOR ES POR DECLARACION DE NOMBRES 
     } else if(myUrl.pathname == '/productos'){
           
       console.log("Peticion de Productos!")
-      mime["json"]
+      mime["json"];
 
       //Leer los parámetros ERROR AQUI
-      console.log(myUrl.searchParams.get('param1'))
       param1 = myUrl.searchParams.get('param1');
 
       param1 = param1.toUpperCase();

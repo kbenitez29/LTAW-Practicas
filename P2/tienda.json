@@ -3,13 +3,13 @@
                         {
                             "nick": "root",
                             "nombre": "root",
-                            "password": "password",
+                            "password": "root",
                             "email": "root@root.com"
                         },
                         {   
                             "nick": "kbenitez",
                             "nombre": "kevin",
-                            "password": "password",
+                            "password": "1234",
                             "email": "kevin@hotmail.com"
                         }
         ]
