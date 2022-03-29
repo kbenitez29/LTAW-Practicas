@@ -37,15 +37,17 @@ const FICHERO_JSON_OUT = "tienda-modificacion.json"
 
 //-- Leer el fichero JSON
 const  tienda_json = fs.readFileSync(FICHERO_JSON);
+const  tienda_json_mod = fs.readFileSync(FICHERO_JSON_OUT);
 
 //-- Crear la estructura tienda a partir del contenido del fichero
 const tienda = JSON.parse(tienda_json);
+const tienda_mod = JSON.parse(tienda_json_mod);
 
 //-- Productos de tienda
 let prodDescr = [];
 let prodTienda = [];
 console.log("Productos disponibles");
-console.log("---------------------");
+console.log("*********************");
 tienda[1]["productos"].forEach((element, index)=>{
   console.log("Nombre: " + element.nombre +
               ", Stock: " + element.stock + ", Precio: " + element.precio);
@@ -59,13 +61,20 @@ console.log();
 let regUsers = [];
 let passUsers = [];
 console.log("Usuarios registrados");
-console.log("--------------------");
+console.log("********************");
 tienda[0]["usuarios"].forEach((element, index)=>{
     console.log("Usuario: " + element.nick);
     regUsers.push(element.nick);
     passUsers.push(element.password);
-    console.log("Passwd: " + element.password);
   });
+
+
+//-- Definir datos de usuario
+let nick;
+let passwd;
+
+//-- Definir existencia de carrito
+let cartExist = false;
 
 //-- Tipos de cuerpo presentes (mime) para indicar en la cabecera
 const mime = {
@@ -147,7 +156,7 @@ function get_cart(req){
         //-- Si el nombre es cart
         if (nombre.trim() === 'cart') {
 
-          products = valor.split(',');
+          products = valor.split(':');
 
           products.forEach((product) => {
 
@@ -254,14 +263,10 @@ const server = http.createServer((req, res)=>{
     //-- Definir user cookie si la hay
     let user = get_user(req);
 
-    //-- Definir datos de usuario
-    let nick;
-    let passwd;
-
     //-- Solicita el recurso raiz, devuelve el main 
     if (myUrl.pathname == '/') {
-        file = main;
-
+        file += "main.html";
+    
     //-- Acceso al formulario de compra
     }else if (myUrl.pathname == '/order.html'){
       user = get_user(req);
@@ -284,59 +289,143 @@ const server = http.createServer((req, res)=>{
       //-- Se comprueba si nick y passwd estan registrados para login correcto
       if (regUsers.includes(nick) && passUsers.includes(passwd)){
         console.log('Usuario registrado');
+
         //Se asigna la cookie al usuario registrado.
         res.setHeader('Set-Cookie', "user=" + nick);
         file += 'login-resp.html';
-        file += login_resp.replace("USER", nick);
       }else{
 
         //Si el nick o passwd no están registrados error de login 
         file += 'login-error.html';
       }
+    
 
+    //-- Llega peticion de añadir al carrito (recurso)
+    }else if(myUrl.pathname == '/addIph'){
+      file += 'apple.html'
+      user = get_user(req);
+
+      //-- Si hay cookie de usuario
+      if (user){
+
+          //-- Si el carrito existe se crea cookie del producto
+          if (cartExist) {
+              make_cookie_cart(req, res, 'apple');
+
+          //-- Si el carrito no existe se crea y la cookie del producto tambien
+          } else {
+              res.setHeader('Set-Cookie', 'cart=apple');
+              cartExist = true;
+          }
+      }
+
+    }else if(myUrl.pathname == '/addSam'){
+      file += 'samsung.html'
+      user = get_user(req);
+
+      //-- Si hay cookie de usuario
+      if (user){
+
+          //-- Si el carrito existe se crea cookie del producto
+          if (cartExist) {
+              make_cookie_cart(req, res, 'samsung');
+          
+          //-- Si el carrito no existe se crea y la cookie del producto tambien
+          } else {
+              res.setHeader('Set-Cookie', 'cart=samsung');
+              cartExist = true;
+          }
+      }
+
+    }else if(myUrl.pathname == '/addHua'){
+      file += 'huawei.html'
+      user = get_user(req);
+
+      //-- Si hay cookie de usuario
+      if (user){
+        
+          //-- Si el carrito existe se crea cookie del producto
+          if (cartExist) {
+              make_cookie_cart(req, res, 'huawei');
+          
+          //-- Si el carrito no existe se crea y la cookie del producto tambien
+          } else {
+              res.setHeader('Set-Cookie', 'cart=huawei');
+              cartExist = true;
+          }
+      }
+
+    //-- Llega peticion de carrito (recurso)
+    }else if (myUrl.pathname == '/cart'){
+      
+      //-- Leer los parámetros
+      direccion = myUrl.searchParams.get('address');
+      tarjeta = myUrl.searchParams.get('card');
+
+      //Guardar pedido
+      if ((direccion != null) && (tarjeta != null)) {
+        let newOrder = {
+            "usuario": get_user(req),
+            "direccion": direccion,
+            "tarjeta": tarjeta,
+            "producto": get_cart(req)
+        };
+
+        tienda_mod.push(newOrder);
+
+        //-- Convertir la variable a cadena JSON
+        let myJSON = JSON.stringify(tienda_mod);
+
+        //-- Actualizar fichero JSON
+        fs.writeFileSync(FICHERO_JSON_OUT, myJSON);
+      }
+
+      //-- Página de pedido realizado
+      file += 'order-resp.html';
+      console.log('Pedido realizado');
     
      //-- Definir la busqueda NO SE QUE COÑO PASA QUE NO FUNCIONA AAAAAAA!!!!
-     // CREO QUE ES PORQUE ALGO NO ESTA DEFINIDO Y PETA ALOMEJOR ES POR DECLARACION DE NOMBRES 
-    } else if(myUrl.pathname == '/productos'){
+    //  // CREO QUE ES PORQUE ALGO NO ESTA DEFINIDO Y PETA ALOMEJOR ES POR DECLARACION DE NOMBRES 
+    // } else if(myUrl.pathname == '/productos'){
           
-      console.log("Peticion de Productos!")
-      mime["json"];
+    //   console.log("Peticion de Productos!")
+    //   mime["json"];
 
-      //Leer los parámetros ERROR AQUI
-      param1 = myUrl.searchParams.get('param1');
+    //   //Leer los parámetros ERROR AQUI
+    //   param1 = myUrl.searchParams.get('param1');
 
-      param1 = param1.toUpperCase();
+    //   param1 = param1.toUpperCase();
 
-      console.log("  Param: " +  param1);
+    //   console.log("  Param: " +  param1);
 
-      let result = [];
+    //   let result = [];
 
-      for (let prod of prodTienda) {
+    //   for (let prod of prodTienda) {
 
-          //Pasar a mayúsculas
-          prodU = prod.toUpperCase();
+    //       //Pasar a mayúsculas
+    //       prodU = prod.toUpperCase();
 
-          // Si el producto comienza por lo indicado en el parametro
-          //meter este producto en el array de resultados
-          if (prodU.startsWith(param1)) {
-              result.push(prod);
-          }
+    //       // Si el producto comienza por lo indicado en el parametro
+    //       //meter este producto en el array de resultados
+    //       if (prodU.startsWith(param1)) {
+    //           result.push(prod);
+    //       }
           
-      }
-      console.log(result);
-      search = result;
-      file = JSON.stringify(result);
+    //   }
+    //   console.log(result);
+    //   search = result;
+    //   file = JSON.stringify(result);
       
     
-    //-- Direccionamiento a páginas segun busqueda  
-    }else if (myUrl.pathname == '/buscar') {
-        if (search == "Iphone 13 Pro") {
-            file += 'apple.html';
-        } else if (search == "Samsung Galaxy S22"){
-            file += 'samsung.html';
-        } else if (search == "Huawei Mate 40 Pro") {
-            file += 'huawei.html';
-        }
+    // //-- Direccionamiento a páginas segun busqueda  
+    // }else if (myUrl.pathname == '/buscar') {
+    //     if (search == "Iphone 13 Pro") {
+    //         file += 'apple.html';
+    //     } else if (search == "Samsung Galaxy S22"){
+    //         file += 'samsung.html';
+    //     } else if (search == "Huawei Mate 40 Pro") {
+    //         file += 'huawei.html';
+    //     }
 
     //-- No es recurso raiz ni ninguno solicitado, devuelve la ruta solicitada
     }else{
@@ -387,12 +476,44 @@ const server = http.createServer((req, res)=>{
             res.writeHead(404, {'Content-Type': 'text/html'});
             console.log('Tipo mime:' , mimeType)
             console.log("Respuesta: 404 Not found\n");
-            
+        
         }else{
+
+
+            //-- Modificamos paginas con los datos correspondientes leidos desde Json
+            if (file == "login-resp.html"){
+              data = `${data}`.replace("USER", nick);
+
+            } else if (file == "apple.html"){
+              data = `${data}`.replace("Descripción", "Descripción<br></br>" + prodDescr[0][1]);
+              data = `${data}`.replace("Precio", "Precio: " + prodDescr[0][3]);
+
+            } else if (file == "samsung.html"){
+              data = `${data}`.replace("Descripción", "Descripción<br></br>" + prodDescr[1][1]);
+              data = `${data}`.replace("Precio", "Precio: " + prodDescr[1][3]);
+
+            } else if (file == "huawei.html"){
+              data = `${data}`.replace("Descripción", "Descripción<br></br>" + prodDescr[2][1]);
+              data = `${data}`.replace("Precio", "Precio: " + prodDescr[2][3]);
+
+            } else if (file =="order.html"){
+              if (user) {
+                data = `${data}`.replace("NONE", get_cart(req));
+              }
+
+            }else if (file =="order-resp.html"){
+              if (user) {
+                data = `${data}`.replace("USER", nick);
+                data = `${data}`.replace("NONE", get_cart(req));
+              }
+            }
+            
             //-- No hay ningun error
             res.writeHead(code,{'Content-Type' : mimeType});
             console.log('Tipo mime:' , mimeType)
             console.log("Respuesta: 200 OK\n");
+
+            
         }
 
         //-- Devuelve al cliente los recursos solcitados

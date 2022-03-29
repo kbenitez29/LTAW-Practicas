@@ -18,19 +18,19 @@
     {   "productos": [
                         {
                             "nombre": "Iphone 13 Pro",
-                            "descripcion": "Pantalla: 6.1, 1170 x 2532 pixels\n Procesador: Apple A15 Bionic",
+                            "descripcion": "Pantalla: 6.1, 1170 x 2532 pixels <br></br>Procesador: Apple A15 Bionic",
                             "precio": "1159€",
                             "stock": 13
                         },
                         {
                             "nombre": "Samsung Galaxy S22",
-                            "descripcion": "Pantalla: 6.1, 1080 x 2340 pixels\n Procesador: Snapdragon 8 3GHz",
+                            "descripcion": "Pantalla: 6.1, 1080 x 2340 pixels <br></br>Procesador: Snapdragon 8 3GHz",
                             "precio": "859€",
                             "stock": 22
                         },
                         {
                             "nombre": "Huawei Mate 40 Pro",
-                            "descripcion": " Pantalla: 6.76, 1344 x 2772 pixels\n Procesador: Kirin 9000 3.13Ghz",
+                            "descripcion": " Pantalla: 6.76, 1344 x 2772 pixels <br></br>Procesador: Kirin 9000 3.13Ghz",
                             "precio": "1199€",
                             "stock": 40
                         }
