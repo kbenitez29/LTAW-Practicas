@@ -6,42 +6,19 @@ const fs = require('fs');
 //-- Puerto del servidor
 const PUERTO = 9090;
 
-// Leemos los ficheros de forma sincrona
-
-// Página principal
-const main = fs.readFileSync('main.html','utf-8');
-
-// Página error
-const error = fs.readFileSync('error.html','utf-8');
-
-// Páginas de productos
-const apple = fs.readFileSync('apple.html','utf-8');
-const samsung = fs.readFileSync('samsung.html','utf-8');
-const huawei = fs.readFileSync('huawei.html','utf-8');
-
-// Páginas de login
-const login = fs.readFileSync('login.html','utf-8');
-const login_resp = fs.readFileSync('login-resp.html','utf-8');
-const login_error = fs.readFileSync('login-error.html','utf-8');
-const unlogged = fs.readFileSync('unloged.html','utf-8');
-
-// Páginas de procesamiento del pedido
-const order = fs.readFileSync('order.html','utf-8');
-const order_resp = fs.readFileSync('order-resp.html','utf-8');
-
 // Ficheros JSON y lectura
 const FICHERO_JSON = "tienda.json";
 
 //-- Nombre del fichero JSON de salida
-const FICHERO_JSON_OUT = "tienda-modificacion.json"
+//const FICHERO_JSON_OUT = "tienda-modificacion.json"
 
 //-- Leer el fichero JSON
 const  tienda_json = fs.readFileSync(FICHERO_JSON);
-const  tienda_json_mod = fs.readFileSync(FICHERO_JSON_OUT);
+//const  tienda_json_mod = fs.readFileSync(FICHERO_JSON_OUT);
 
 //-- Crear la estructura tienda a partir del contenido del fichero
 const tienda = JSON.parse(tienda_json);
-const tienda_mod = JSON.parse(tienda_json_mod);
+//const tienda_mod = JSON.parse(tienda_json_mod);
 
 //-- Productos de tienda
 let prodDescr = [];
@@ -371,13 +348,13 @@ const server = http.createServer((req, res)=>{
             "producto": get_cart(req)
         };
 
-        tienda_mod.push(newOrder);
+        tienda[2]["pedidos"].push(newOrder);
 
         //-- Convertir la variable a cadena JSON
-        let myJSON = JSON.stringify(tienda_mod);
+        let myJSON = JSON.stringify(tienda);
 
         //-- Actualizar fichero JSON
-        fs.writeFileSync(FICHERO_JSON_OUT, myJSON);
+        fs.writeFileSync(FICHERO_JSON, myJSON);
       }
 
       //-- Página de pedido realizado
@@ -496,15 +473,19 @@ const server = http.createServer((req, res)=>{
               data = `${data}`.replace("Descripción", "Descripción<br></br>" + prodDescr[2][1]);
               data = `${data}`.replace("Precio", "Precio: " + prodDescr[2][3]);
 
-            } else if (file =="order.html"){
+            } else if (file == "order.html"){
               if (user) {
                 data = `${data}`.replace("NONE", get_cart(req));
               }
 
-            }else if (file =="order-resp.html"){
+            }else if (file == "order-resp.html"){
               if (user) {
                 data = `${data}`.replace("USER", nick);
                 data = `${data}`.replace("NONE", get_cart(req));
+              }
+            }else if (file == "main.html"){
+              if(user){
+                data = `${data}`.replace('<p id="welcome"></p>', "Bienvenido/a " + nick + "!");
               }
             }
             
@@ -513,7 +494,6 @@ const server = http.createServer((req, res)=>{
             console.log('Tipo mime:' , mimeType)
             console.log("Respuesta: 200 OK\n");
 
-            
         }
 
         //-- Devuelve al cliente los recursos solcitados
