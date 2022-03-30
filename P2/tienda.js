@@ -53,6 +53,8 @@ let passwd;
 //-- Definir existencia de carrito
 let cartExist = false;
 
+let busq
+
 //-- Tipos de cuerpo presentes (mime) para indicar en la cabecera
 const mime = {
     'html' : 'text/html',
@@ -361,40 +363,40 @@ const server = http.createServer((req, res)=>{
       file += 'order-resp.html';
       console.log('Pedido realizado');
     
-     //-- Definir la busqueda NO SE QUE COÑO PASA QUE NO FUNCIONA AAAAAAA!!!!
-    //  // CREO QUE ES PORQUE ALGO NO ESTA DEFINIDO Y PETA ALOMEJOR ES POR DECLARACION DE NOMBRES 
-    // } else if(myUrl.pathname == '/productos'){
+    //-- Definir la busqueda NO SE QUE COÑO PASA QUE NO FUNCIONA AAAAAAA!!!!
+    // CREO QUE ES PORQUE EL FILE NO ES UN FICHERO DE TIPO HTML 
+    } else if(myUrl.pathname == '/productos'){
           
-    //   console.log("Peticion de Productos!")
-    //   mime["json"];
+      console.log("Peticion de Productos!")
 
-    //   //Leer los parámetros ERROR AQUI
-    //   param1 = myUrl.searchParams.get('param1');
+      //Leer los parámetros ERROR AQUI
+      param1 = myUrl.searchParams.get('param1');
 
-    //   param1 = param1.toUpperCase();
+      param1 = param1.toUpperCase();
 
-    //   console.log("  Param: " +  param1);
+      console.log("  Param: " +  param1);
 
-    //   let result = [];
+      let result = [];
 
-    //   for (let prod of prodTienda) {
+      for (let prod of prodTienda) {
 
-    //       //Pasar a mayúsculas
-    //       prodU = prod.toUpperCase();
+          //Pasar a mayúsculas
+          prodU = prod.toUpperCase();
 
-    //       // Si el producto comienza por lo indicado en el parametro
-    //       //meter este producto en el array de resultados
-    //       if (prodU.startsWith(param1)) {
-    //           result.push(prod);
-    //       }
+          // Si el producto comienza por lo indicado en el parametro
+          //meter este producto en el array de resultados
+          if (prodU.startsWith(param1)) {
+              result.push(prod);
+          }
           
-    //   }
-    //   console.log(result);
-    //   search = result;
-    //   file = JSON.stringify(result);
+      }
+      console.log("RESULT:" + result);
+      search = result;
+      busq = JSON.stringify(result);
+      console.log("FIlE:" + file);
       
     
-    // //-- Direccionamiento a páginas segun busqueda  
+    //-- Direccionamiento a páginas segun busqueda  
     // }else if (myUrl.pathname == '/buscar') {
     //     if (search == "Iphone 13 Pro") {
     //         file += 'apple.html';
@@ -439,13 +441,29 @@ const server = http.createServer((req, res)=>{
     let mimeType = mime[mimeSel]
     
 
+    
+
     //-- Realizar la lectura asíncrona de los ficheros solicitados por el cliente
     //-- la lectura se da en 'data' y si hay error en 'err'
     fs.readFile(file,(err, data) => {
 
         //-- Hay error en lectura del archivo, no existe o el archivo a acceder es 'error.html'
         if ((err) || (file == 'error.html')){
-
+          if(mimeType == "application/json"){
+            //-- No hay ningun error
+            console.log("Respuesta: 200 OK\n");
+            res.write(busq);
+            if (myUrl.pathname == '/buscar') {
+              if (busq == "Iphone 13 Pro") {
+                data = fs.readFileSync('apple.html');
+              } else if (busq == "Samsung Galaxy S22"){
+                data = fs.readFileSync('samsung.html');
+              } else if (busq == "Huawei Mate 40 Pro") {
+                data = fs.readFileSync('huawei.html');
+              }
+            }
+            
+          }
             //-- Leemos y cargamos el archivo 'error.html' como respuesta de forma sincrona
             data = fs.readFileSync("error.html");
             
@@ -453,7 +471,7 @@ const server = http.createServer((req, res)=>{
             res.writeHead(404, {'Content-Type': 'text/html'});
             console.log('Tipo mime:' , mimeType)
             console.log("Respuesta: 404 Not found\n");
-        
+          
         }else{
 
 
@@ -487,7 +505,9 @@ const server = http.createServer((req, res)=>{
               if(user){
                 data = `${data}`.replace('<p id="welcome"></p>', "Bienvenido/a " + nick + "!");
               }
-            }
+            } 
+
+            
             
             //-- No hay ningun error
             res.writeHead(code,{'Content-Type' : mimeType});
