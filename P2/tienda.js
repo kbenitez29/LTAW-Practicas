@@ -53,7 +53,7 @@ let passwd;
 //-- Definir existencia de carrito
 let cartExist = false;
 
-let busq
+
 
 //-- Tipos de cuerpo presentes (mime) para indicar en la cabecera
 const mime = {
@@ -238,6 +238,8 @@ const server = http.createServer((req, res)=>{
     //-- Busqueda de elementos
     let search;
     let param1;
+    let busq;
+    let mimeJ;
 
     //-- Definir user cookie si la hay
     let user = get_user(req);
@@ -371,40 +373,43 @@ const server = http.createServer((req, res)=>{
 
       //Leer los parámetros ERROR AQUI
       param1 = myUrl.searchParams.get('param1');
+      if (param1){
 
-      param1 = param1.toUpperCase();
+        param1 = param1.toUpperCase();
 
-      console.log("  Param: " +  param1);
+        console.log("  Param: " +  param1);
 
-      let result = [];
+        let result = [];
 
-      for (let prod of prodTienda) {
+        for (let prod of prodTienda) {
 
-          //Pasar a mayúsculas
-          prodU = prod.toUpperCase();
+            //Pasar a mayúsculas
+            prodU = prod.toUpperCase();
 
-          // Si el producto comienza por lo indicado en el parametro
-          //meter este producto en el array de resultados
-          if (prodU.startsWith(param1)) {
-              result.push(prod);
-          }
-          
-      }
-      console.log("RESULT:" + result);
-      search = result;
-      busq = JSON.stringify(result);
-      console.log("FIlE:" + file);
+            // Si el producto comienza por lo indicado en el parametro
+            //meter este producto en el array de resultados
+            if (prodU.startsWith(param1)) {
+                result.push(prod);
+            }
+            
+        }
+        console.log("RESULT:" + result);
+        search = result;
+        busq = JSON.stringify(result);
+        console.log("File:" + busq);
+        mimeJ = 'application/json';
       
-    
+      }
+
     //-- Direccionamiento a páginas segun busqueda  
-    // }else if (myUrl.pathname == '/buscar') {
-    //     if (search == "Iphone 13 Pro") {
-    //         file += 'apple.html';
-    //     } else if (search == "Samsung Galaxy S22"){
-    //         file += 'samsung.html';
-    //     } else if (search == "Huawei Mate 40 Pro") {
-    //         file += 'huawei.html';
-    //     }
+    }else if (myUrl.pathname == '/buscar') {
+        if (search == "Iphone 13 Pro") {
+            file += 'apple.html';
+        } else if (search == "Samsung Galaxy S22"){
+            file += 'samsung.html';
+        } else if (search == "Huawei Mate 40 Pro") {
+            file += 'huawei.html';
+        }
 
     //-- No es recurso raiz ni ninguno solicitado, devuelve la ruta solicitada
     }else{
@@ -441,40 +446,20 @@ const server = http.createServer((req, res)=>{
     let mimeType = mime[mimeSel]
     
 
-    
-
     //-- Realizar la lectura asíncrona de los ficheros solicitados por el cliente
     //-- la lectura se da en 'data' y si hay error en 'err'
     fs.readFile(file,(err, data) => {
 
+        if (param1){
+            data = busq;
+            res.writeHead(code,{'Content-Type': mimeJ});
+            res.write(data);
+            res.end();
+
         //-- Hay error en lectura del archivo, no existe o el archivo a acceder es 'error.html'
-        if ((err) || (file == 'error.html')){
-          if(mimeType == "application/json"){
-            //-- No hay ningun error
-            console.log("Respuesta: 200 OK\n");
-            res.write(busq);
-            if (myUrl.pathname == '/buscar') {
-              if (busq == "Iphone 13 Pro") {
-                data = fs.readFileSync('apple.html');
-              } else if (busq == "Samsung Galaxy S22"){
-                data = fs.readFileSync('samsung.html');
-              } else if (busq == "Huawei Mate 40 Pro") {
-                data = fs.readFileSync('huawei.html');
-              }
-            }
-            
-          }
-            //-- Leemos y cargamos el archivo 'error.html' como respuesta de forma sincrona
-            data = fs.readFileSync("error.html");
-            
-            //-- Cabeceras de error, pagina desconocida
-            res.writeHead(404, {'Content-Type': 'text/html'});
-            console.log('Tipo mime:' , mimeType)
-            console.log("Respuesta: 404 Not found\n");
-          
-        }else{
-
-
+        } else if (err == null){
+      
+            user = get_user(req);
             //-- Modificamos paginas con los datos correspondientes leidos desde Json
             if (file == "login-resp.html"){
               data = `${data}`.replace("USER", nick);
@@ -505,20 +490,37 @@ const server = http.createServer((req, res)=>{
               if(user){
                 data = `${data}`.replace('<p id="welcome"></p>', "Bienvenido/a " + nick + "!");
               }
-            } 
+            }
 
-            
-            
             //-- No hay ningun error
             res.writeHead(code,{'Content-Type' : mimeType});
             console.log('Tipo mime:' , mimeType)
             console.log("Respuesta: 200 OK\n");
-
+            //-- Devuelve al cliente los recursos solcitados
+            res.write(data);
+            res.end();
+        
+        }else if ((err) || (file == 'error.html')){
+          
+          //-- Leemos y cargamos el archivo 'error.html' como respuesta de forma sincrona
+          data = fs.readFileSync("error.html");
+          
+          //-- Cabeceras de error, pagina desconocida
+          res.writeHead(404, {'Content-Type':'text/html'});
+          console.log('Tipo mime:' , mimeType);
+          console.log("Respuesta: 404 Not found\n");
+          //-- Devuelve al cliente los recursos solcitados
+          res.write(data);
+          res.end();
+      
+        
         }
 
-        //-- Devuelve al cliente los recursos solcitados
-        res.write(data);
-        res.end();
+        
+         
+
+        
+        
     });
 });
 
