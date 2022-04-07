@@ -53,7 +53,11 @@ let passwd;
 //-- Definir existencia de carrito
 let cartExist = false;
 
-
+//-- Busqueda de elementos
+let search;
+let param1;
+let busq;
+let mimeJ;
 
 //-- Tipos de cuerpo presentes (mime) para indicar en la cabecera
 const mime = {
@@ -235,12 +239,6 @@ const server = http.createServer((req, res)=>{
     //-- Variable para almacenar el archivo solicitado
     let file = '';
 
-    //-- Busqueda de elementos
-    let search;
-    let param1;
-    let busq;
-    let mimeJ;
-
     //-- Definir user cookie si la hay
     let user = get_user(req);
 
@@ -393,24 +391,27 @@ const server = http.createServer((req, res)=>{
             }
             
         }
-        console.log("RESULT:" + result);
-        search = result;
         busq = JSON.stringify(result);
-        console.log("File:" + busq);
+        search = result;
+        console.log("File:" + search);
         mimeJ = 'application/json';
       
       }
 
-    //-- Direccionamiento a páginas segun busqueda  
+      //-- Direccionamiento a páginas segun busqueda  
     }else if (myUrl.pathname == '/buscar') {
-        if (search == "Iphone 13 Pro") {
+        if (search == 'Iphone 13 Pro') {
             file += 'apple.html';
-        } else if (search == "Samsung Galaxy S22"){
+        } else if (search == 'Samsung Galaxy S22'){
             file += 'samsung.html';
-        } else if (search == "Huawei Mate 40 Pro") {
+        } else if (search == 'Huawei Mate 40 Pro') {
             file += 'huawei.html';
+            
+            //-- Archivo no encontrado
+        } else{
+            file += 'error.html'
         }
-
+      
     //-- No es recurso raiz ni ninguno solicitado, devuelve la ruta solicitada
     }else{
 
@@ -444,22 +445,14 @@ const server = http.createServer((req, res)=>{
 
     //-- Definimos la seleccion del tipo mime a utilizar en funcion de la extension del recurso (archivo) solicitado
     let mimeType = mime[mimeSel]
-    
 
     //-- Realizar la lectura asíncrona de los ficheros solicitados por el cliente
     //-- la lectura se da en 'data' y si hay error en 'err'
     fs.readFile(file,(err, data) => {
 
-        if (param1){
-            data = busq;
-            res.writeHead(code,{'Content-Type': mimeJ});
-            res.write(data);
-            res.end();
-
-        //-- Hay error en lectura del archivo, no existe o el archivo a acceder es 'error.html'
-        } else if (err == null){
+        //-- No hay error
+        if (err == null){
       
-            user = get_user(req);
             //-- Modificamos paginas con los datos correspondientes leidos desde Json
             if (file == "login-resp.html"){
               data = `${data}`.replace("USER", nick);
@@ -500,6 +493,31 @@ const server = http.createServer((req, res)=>{
             res.write(data);
             res.end();
         
+          //-- Se hace busqueda en la barra o directamente con URL (incluidos recursos no existentes (error)) 
+        }else if (param1){
+
+          //-- Se hace busqueda
+          if (mimeType == 'application/json'){
+            data = busq;
+            console.log('Has buscado: ', search)
+            res.writeHead(code,{'Content-Type': mimeJ});
+
+            //-- Hay error en lectura del archivo, no existe (busqueda URL) o el archivo a acceder es 'error.html'
+          }else if ((err) || (file == 'error.html')){
+          
+            //-- Leemos y cargamos el archivo 'error.html' como respuesta de forma sincrona
+            data = fs.readFileSync("error.html");
+            
+            //-- Cabeceras de error, pagina desconocida
+            res.writeHead(404, {'Content-Type':'text/html'});
+            console.log('Tipo mime:' , mimeType);
+            console.log("Respuesta: 404 Not found\n");
+          }
+
+          res.write(data);
+          res.end();
+          
+          //-- Hay error en lectura del archivo, no existe o el archivo a acceder es 'error.html'
         }else if ((err) || (file == 'error.html')){
           
           //-- Leemos y cargamos el archivo 'error.html' como respuesta de forma sincrona
@@ -512,15 +530,8 @@ const server = http.createServer((req, res)=>{
           //-- Devuelve al cliente los recursos solcitados
           res.write(data);
           res.end();
-      
-        
         }
 
-        
-         
-
-        
-        
     });
 });
 
