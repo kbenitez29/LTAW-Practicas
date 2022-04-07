@@ -9,16 +9,11 @@ const PUERTO = 9090;
 // Ficheros JSON y lectura
 const FICHERO_JSON = "tienda.json";
 
-//-- Nombre del fichero JSON de salida
-//const FICHERO_JSON_OUT = "tienda-modificacion.json"
-
 //-- Leer el fichero JSON
 const  tienda_json = fs.readFileSync(FICHERO_JSON);
-//const  tienda_json_mod = fs.readFileSync(FICHERO_JSON_OUT);
 
 //-- Crear la estructura tienda a partir del contenido del fichero
 const tienda = JSON.parse(tienda_json);
-//const tienda_mod = JSON.parse(tienda_json_mod);
 
 //-- Productos de tienda
 let prodDescr = [];
