@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="public/favicon.png">
+  <link rel="stylesheet" href="main.css">
   <title>Chat Web</title>
 
   <!-- Cargar la biblioteca Socket.IO. Nos la debe entregar el servidor -->
@@ -15,9 +16,17 @@
 </head>
 
 <body>
-  <h2>Ejemplo 9: Mini-chat</h2>
-  <input type="text" placeholder="Escribe aquí los mensajes..." autocomplete="off" id="msg_entry">
-  <h3>Mensajes recibidos</h3>
-  <p id="display"></p>
+  <div class="arriba">
+    <img src="public/logo.png" id="logo">
+    <h1>Chat Web </h1>
+  </div>
+  <div class="abajo">
+    <div id='nick-box'>
+      <h3>Introduce tu nick:</h3>
+      <input type="text" id="nick">
+    </div>
+    <p id="display"></p>
+    <input type="text" placeholder="Escribe aquí los mensajes..." autocomplete="off" id="msg_entry">
+  </div>
 </body>
 </html>
