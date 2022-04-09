@@ -76,10 +76,13 @@ io.on('connect', (socket) => {
   //-- Mensaje recibido: Reenviarlo a todos los clientes conectados
   socket.on("message", (msg)=> {
 
+    //-- Eliminamos el nick
+    realMsg = msg.split(' ')[1];
+
     //-- Se recibe peticion de comando
-    if (msg.startsWith('/')){
+    if (realMsg.startsWith('/')){
       console.log("Comando Recibido!".green);
-      if (msg == '/help'){
+      if (realMsg == '/help'){
         socket.send("Comandos disponibles<br>" +
                 ">> <b>'/help'</b>: Mostrar los comandos soportados<br>" +
                 ">> <b>'/list'</b>: Mostrar el numero de usuarios conectados<br>" +
@@ -87,15 +90,15 @@ io.on('connect', (socket) => {
                 ">> <b>'/date'</b>: Mostrar la fecha actual<br>");
         console.log('/help');
 
-      } else if (msg == '/list'){
+      } else if (realMsg == '/list'){
           socket.send(">> Numero de usuarios conectados: " + nUser);
           console.log('/list');
 
-      } else if (msg == '/hello'){
+      } else if (realMsg == '/hello'){
           socket.send(">> Hola amigo, espero que tengas un bonito día :)");
           console.log('/hello');
 
-      } else if (msg == "/date"){
+      } else if (realMsg == "/date"){
           socket.send('>> Hoy es: '+ now());
           console.log('/date');
 
