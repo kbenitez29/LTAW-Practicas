@@ -41,6 +41,8 @@ h3{
     text-align: center;
 }
 
+
+
 .abajo{
     font-family: "Azonix";
     padding-block: 40px;
@@ -68,6 +70,7 @@ input{
     border-radius: 20px;
     border: 12px solid rgba(0, 0, 0, 0.356);
     background-color: rgb(245, 227, 200);
+    color: rgb(0, 0, 0);
     height: 400px;
     margin-left: 22%;
     margin-right: 22%;
@@ -75,7 +78,6 @@ input{
     font-family: Azonix;
     font-size: 15px;
     overflow: auto;
-    padding-bottom: 0%;
 }
 
 #msg_entry{
