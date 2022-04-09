@@ -54,10 +54,10 @@ io.on('connect', (socket) => {
   nUser += 1; 
 
   //-- Mensaje de bienvenida usuario personalizada
-  socket.send("Bienvenido a la sala de chat!")
+  socket.send("Bienvenido a la sala de chat!");
 
    //-- Mensaje de bienvenida usuario general
-   io.send(">> Nuevo usuario conectado")
+   io.send(">> Nuevo usuario conectado");
 
 
   console.log('** NUEVA CONEXIÓN **'.yellow);
@@ -68,6 +68,9 @@ io.on('connect', (socket) => {
 
     //-- Desconexion de usuario
     nUser -= 1;
+
+     //-- Mensaje de desconexión
+    io.send(">> Usuario desconectado");
   });  
 
   //-- Mensaje recibido: Reenviarlo a todos los clientes conectados
@@ -75,7 +78,7 @@ io.on('connect', (socket) => {
 
     //-- Se recibe peticion de comando
     if (msg.startsWith('/')){
-      console.log("Comando Recibido!");
+      console.log("Comando Recibido!".green);
       if (msg == '/help'){
         socket.send("Comandos disponibles<br>" +
                 ">> <b>'/help'</b>: Mostrar los comandos soportados<br>" +
@@ -97,14 +100,14 @@ io.on('connect', (socket) => {
           console.log('/date');
 
       } else{
-        console.log("Comando no reconocido!")
+        console.log("Comando no reconocido!".red)
       }
 
     } else {
 
-      console.log("Mensaje Recibido!: " + msg.blue);
+      console.log("Mensaje Recibido! --> " + msg.blue);
 
-      //-- Reenviarlo a todos los clientes conectados
+      //-- Mensaje normal, se reenvia a todos los clientes conectados
       io.send(msg);
     }
   });
