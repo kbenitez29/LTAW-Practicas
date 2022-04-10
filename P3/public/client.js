@@ -41,7 +41,6 @@ msg_entry.onchange = () => {
 
   //-- Borrar el mensaje actual
   msg_entry.value = "";
-
 }
 
 //-- Se muestra el mensaje escribiendo...
