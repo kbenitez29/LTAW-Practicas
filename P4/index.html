@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Permitir sólo scripts y ficheros de la máquina local -->
+        <!-- Con esto se elimina el aviso de seguridad: Insecure Content-Security-Policy -->
+        <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:; default-src 'self';" />
+
+        <!-- Hoja de estilo de la interfaz -->
+        <link rel="stylesheet" href="index.css">
+
+        <!-- Cargar el proceso asociado a esta página -->
+        <script src="index.js" defer></script>
+
+        <title>CHAT-SERVER</title>
+    </head>
+    <body>
+        <h1>Home Chat (Server)</h1>
+        <hr>
+        <div class="izq">
+            <p>Versión de Node: <span id="info1" class="blue"></span> </p>
+            <p>Versión de Chrome: <span id="info2" class="blue"></span></p>
+            <p>Versión de Electron: <span id="info3" class="blue"></span></p>
+            <p>Dirección IP: <span id="info4" class="blue"></span></p>
+            <p>Arquitectura: <span id="info5" class="blue"></span></p>
+            <p>Máquina: <span id="info6" class="blue"></span></p>
+            <p>Directorio: <span id="info7" class="blue"></span></p>
+        </div>
+
+        <div class="der" id="mensaje">
+            <p>Mensajes: <br><br><span id="mensajes" class="blue"></span></p>
+        </div>
+
+        <div class="abajo">
+            <p>Uuarios conectados: <span id="nUsu" class="blue"></span></p>
+            <button id="button_test">Enviar mensaje de prueba</button>
+        </div>
+    </body>
+</html>
