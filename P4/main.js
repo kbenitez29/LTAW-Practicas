@@ -65,11 +65,21 @@ io.on('connect', (socket) => {
   //-- Mensaje de bienvenida usuario personalizada
   socket.send("Bienvenido a la sala de chat!");
 
-   //-- Mensaje de bienvenida usuario general
-   io.send(">> Nuevo usuario conectado");
+  //-- Mensaje de bienvenida usuario general
+  io.send(">> Nuevo usuario conectado");
+
+  //-- Enviar un mensaje al proceso de renderizado para que lo saque
+  //-- por la interfaz gráfica, mensaje de conversacion
+  win.webContents.send('sendMssg', '>> Nuevo usuario conectado');
 
 
   console.log('** NUEVA CONEXIÓN **'.yellow);
+
+
+
+  //-- Enviar un mensaje al proceso de renderizado para que lo saque
+  //-- por la interfaz gráfica de numero de usuarios
+  win.webContents.send('sendUsers', nUser);
 
   //-- Evento de desconexión
   socket.on('disconnect', function(){
@@ -80,6 +90,14 @@ io.on('connect', (socket) => {
 
      //-- Mensaje de desconexión
     io.send(">> Usuario desconectado");
+
+    //-- Enviar un mensaje al proceso de renderizado para que lo saque
+    //-- por la interfaz gráfica, mensaje de conversacion
+    win.webContents.send('sendMssg', '>> Usuario desconectado');
+
+    //-- Enviar un mensaje al proceso de renderizado para que lo saque
+    //-- por la interfaz gráfica de numero de usuarios
+    win.webContents.send('sendUsers', nUser);
   });  
 
   //-- Mensaje recibido: Reenviarlo a todos los clientes conectados
@@ -91,6 +109,11 @@ io.on('connect', (socket) => {
     //-- Se recibe peticion de comando
     if (realMsg.startsWith('/')){
       console.log("Comando Recibido!".green);
+
+      //-- Enviar un mensaje al proceso de renderizado para que lo saque
+      //-- por la interfaz gráfica, mensjae de conversacion
+      win.webContents.send('sendMssg', realMsg);
+
       if (realMsg == '/help'){
         socket.send("Comandos disponibles<br>" +
                 ">> <b>'/help'</b>: Mostrar los comandos soportados<br>" +
@@ -121,6 +144,10 @@ io.on('connect', (socket) => {
 
       //-- Mensaje normal, se reenvia a todos los clientes conectados
       io.send(msg);
+
+      //-- Enviar un mensaje al proceso de renderizado para que lo saque
+      //-- por la interfaz gráfica, mensaje de conversacion
+      win.webContents.send('sendMssg', msg);
     }
   });
 
@@ -137,8 +164,8 @@ electron.app.on('ready', () => {
 
     //-- Crear la ventana principal de nuestra aplicación
     win = new electron.BrowserWindow({
-        width: 1000,   //-- Anchura 
-        height: 800,  //-- Altura
+        width: 1200,   //-- Anchura 
+        height: 900,  //-- Altura
 
         //-- Permitir que la ventana tenga ACCESO AL SISTEMA
         webPreferences: {
@@ -155,11 +182,33 @@ electron.app.on('ready', () => {
   //-- Cargar contenido web en la ventana
   //-- La ventana es en realidad.... ¡un navegador!
   //win.loadURL('https://www.urjc.es/etsit');
+  
+
+
+  //-- Obtener direccion IP
+  ipAdd = 'http://' + ip.address() + ':' + PUERTO;
+
+  //-- Enviar un mensaje al proceso de renderizado para que lo saque
+  //-- por la interfaz gráfica (Direccion ip)
+  win.webContents.send('sendIp', ipAdd);
+
 
   //-- Cargar interfaz gráfica en HTML
   win.loadFile("index.html");
 
 });
+
+//-- Esperar a recibir los mensajes de botón apretado (Test) del proceso de 
+//-- renderizado. Al recibirlos se escribe una cadena en la consola 
+//-- y se manda mensaje a los clientes conectados
+electron.ipcMain.handle('test', (event, msg) => {
+  console.log("-> Mensaje: " + msg);
+
+  //-- Mensaje normal, se reenvia a todos los clientes conectados
+  io.send(msg);
+});
+
+
 
 //-- Lanzar el servidor HTTP
 //-- ¡Que empiecen los juegos de los WebSockets!

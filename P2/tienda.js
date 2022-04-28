@@ -358,13 +358,12 @@ const server = http.createServer((req, res)=>{
       file += 'order-resp.html';
       console.log('Pedido realizado');
     
-    //-- Definir la busqueda NO SE QUE COÑO PASA QUE NO FUNCIONA AAAAAAA!!!!
-    // CREO QUE ES PORQUE EL FILE NO ES UN FICHERO DE TIPO HTML 
+    
     } else if(myUrl.pathname == '/productos'){
           
       console.log("Peticion de Productos!")
 
-      //Leer los parámetros ERROR AQUI
+      //Leer los parámetros 
       param1 = myUrl.searchParams.get('param1');
       if (param1){
 

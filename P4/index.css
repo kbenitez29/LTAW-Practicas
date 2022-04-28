@@ -48,8 +48,12 @@ h1{
     text-align: center;
     font-family: 'Azonix';
     font-size: 15px;
+    overflow: auto;
 }
 
+#display{
+    overflow: auto;
+}
 #button_test{
     font-family: 'Azonix';
 }
