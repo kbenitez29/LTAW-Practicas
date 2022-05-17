@@ -16,6 +16,10 @@ let win = null;
 
 const PUERTO = 9090;
 
+//-- Obtener direccion IP
+let ipAdd;
+
+
 //-- Numero de usuarios conectados
 let nUser = 0;
 
@@ -46,6 +50,7 @@ app.get('/', (req, res) => {
   let entry = fs.readFileSync('public/main.html', 'utf-8');
   res.send(entry);
   console.log("Punto de entrada 'main.html'");
+
 });
 
 //-- Esto es necesario para que el servidor le envíe al cliente la
@@ -161,6 +166,7 @@ console.log("Arrancando electron...");
 //-- ejecuta esta función
 electron.app.on('ready', () => {
     console.log("Evento Ready!");
+  
 
     //-- Crear la ventana principal de nuestra aplicación
     win = new electron.BrowserWindow({
@@ -172,8 +178,9 @@ electron.app.on('ready', () => {
           nodeIntegration: true,
           contextIsolation: false
         }
+        
     });
-
+    
   //-- En la parte superior se nos ha creado el menu
   //-- por defecto
   //-- Si lo queremos quitar, hay que añadir esta línea
@@ -183,17 +190,19 @@ electron.app.on('ready', () => {
   //-- La ventana es en realidad.... ¡un navegador!
   //win.loadURL('https://www.urjc.es/etsit');
   
-  //-- Obtener direccion IP
-  ipAdd = 'http://' + ip.address() + ':' + PUERTO;
-  console.log(ipAdd)
-  //-- Enviar un mensaje al proceso de renderizado para que lo saque
-  //-- por la interfaz gráfica (Direccion ip)
-  win.webContents.send('sendIp', ipAdd);
-
   //-- Cargar interfaz gráfica en HTML
   win.loadFile("index.html");
+  
+
+  //   ipAdd = 'http://' + ip.address() + ':' + PUERTO;
+  //   console.log(ipAdd);
+  //   //-- Enviar un mensaje al proceso de renderizado para que lo saque
+  //   //-- por la interfaz gráfica (Direccion ip)
+  //   win.webContents.send('sendIp', ipAdd);
 
 });
+
+
 
 //-- Esperar a recibir los mensajes de botón apretado (Test) del proceso de 
 //-- renderizado. Al recibirlos se escribe una cadena en la consola 
@@ -204,6 +213,7 @@ electron.ipcMain.handle('test', (event, msg) => {
   //-- Mensaje normal, se reenvia a todos los clientes conectados
   io.send(msg);
 });
+
 
 
 

@@ -60,7 +60,7 @@ h3{
 
 input{
     border-radius: 8px; 
-    font-family: Azonix;
+    font-family: "Azonix";
     text-align: center;
     padding: 7px;
 }
@@ -75,7 +75,7 @@ input{
     margin-left: 22%;
     margin-right: 22%;
     text-align: center;
-    font-family: Azonix;
+    font-family: "Azonix";
     font-size: 15px;
     overflow: auto;
 }
@@ -87,7 +87,7 @@ input{
     color: rgb(37, 35, 35);
     width: 50%;
     height: 30px;
-    font-family: Azonix;
+    font-family: "Azonix";
     font-size: 25px;
     margin-left: 24.5%;
     margin-top: 10px;
@@ -96,7 +96,7 @@ input{
 
 input{
     border-radius: 8px; 
-    font-family: Azonix;
+    font-family: "Azonix";
     text-align: center;
     padding: 7px;
 }

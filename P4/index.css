@@ -3,6 +3,18 @@
     src: url(public/Azonix-1VB0.otf);
 }
 
+body{
+    background:url("public/image/fondo.jpg");
+}
+
+.arriba{
+    font-family: "Azonix";
+    background-color: rgb(236, 208, 165);
+    text-align: center;
+    border: 8px solid rgba(0, 0, 0, 0.356);
+    padding: 5px;
+}
+
 p{
     font-family: 'Azonix';
 
@@ -14,34 +26,61 @@ h1{
 }  
   
 .izq{
-    text-align: left;
+    text-align: center;
     padding-left: 10px;
+    padding-right: 10px;
     padding-top: 20px;
     
     margin-left: 4%;
     float: left;
-    height: auto;
+    
+    border-radius: 20px;
+    border: 12px solid rgba(0, 0, 0, 0.356);
+    background-color: rgb(245, 227, 200);
+    color: rgb(68, 63, 53);
+    height: 450px;
+    width: 450px;
+
+    font-family: "Azonix";
+    font-size: 15px;
+    overflow: auto;
+    
+    
 }
   
 .der{
     text-align: center;
     padding-top: 20px;
     padding-left: 10px;
-    
-    
+    float: right;
     margin-left: 55%;
     position: absolute;
-    height: 355px;
+
+    border-radius: 20px;
+    border: 12px solid rgba(0, 0, 0, 0.356);
+    background-color: rgb(245, 227, 200);
+
+    color: rgb(68, 63, 53);
+    height: 450px;
+    width: 450px;
+    
+    font-family: "Azonix";
+    font-size: 15px;
+    overflow: auto;
 }
   
 
 .abajo{
-    margin-top: 530px;
+    margin-top: 550px;
     text-align: center;
+    border-radius: 20px;
+
+    border: 5px solid rgba(0, 0, 0, 0.356);
+    background-color: rgb(179, 174, 168);
+    color: rgb(37, 35, 35);
     
+    padding: 15px;
 }
-  
-  
   
 #mensajes {
     padding: 10px;
@@ -55,6 +94,23 @@ h1{
     overflow: auto;
 }
 
-#button_test{
+
+#qr{
+    display:block;
+    padding: 10px;
+    margin: auto;
+}
+
+#btn_test{
+    padding: 12px; 
+    background-color: rgb(231, 229, 225);
+    color: #000000; 
     font-family: 'Azonix';
+    border-radius: 50px;
+    font-size: 20px;
+    text-align: center;
+}
+
+#sendButt:hover{
+    background-color: rgb(241, 226, 204);
 }
