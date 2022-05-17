@@ -1,4 +1,5 @@
 const electron = require('electron');
+const QRCode = require('qrcode');
 
 console.log("Hola desde el proceso de la web...");
 
@@ -17,6 +18,9 @@ const info4 = document.getElementById("info4");
 const info5 = document.getElementById("info5");
 const info6 = document.getElementById("info6");
 const info7 = document.getElementById("info7");
+
+//-- Mostrar codigo QR
+const qr = document.getElementById("qr");
 
 //-- Acceder a la API de node para obtener la info
 //-- Sólo es posible si nos han dado permisos desde
@@ -46,8 +50,17 @@ electron.ipcRenderer.on('sendUsers', (event, message) => {
 
 //-- Mensaje recibido del proceso MAIN, direccion ip NO LA MUESTRA NO SE PORQUE ERRORR!!!!!
 electron.ipcRenderer.on('sendIp', (event, message) => {
-    console.log("Recibido: " + message);
+    console.log("Recibida IP: " + message);
     info4.textContent = message;
+    
+    //-- Generación del código QR en funcion de la URL
+
+    url = message + "/index.html"
+    QRCode.toDataURL(url, function (err, url) {
+        qr.src = url;
+        console.log("IP QR: " + url);
+    });
+
   });
 
 //-- Mensaje recibido del proceso MAIN, recepcion de mensajes

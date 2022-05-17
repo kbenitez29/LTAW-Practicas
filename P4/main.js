@@ -183,15 +183,12 @@ electron.app.on('ready', () => {
   //-- La ventana es en realidad.... ¡un navegador!
   //win.loadURL('https://www.urjc.es/etsit');
   
-
-
   //-- Obtener direccion IP
   ipAdd = 'http://' + ip.address() + ':' + PUERTO;
-
+  console.log(ipAdd)
   //-- Enviar un mensaje al proceso de renderizado para que lo saque
   //-- por la interfaz gráfica (Direccion ip)
   win.webContents.send('sendIp', ipAdd);
-
 
   //-- Cargar interfaz gráfica en HTML
   win.loadFile("index.html");
