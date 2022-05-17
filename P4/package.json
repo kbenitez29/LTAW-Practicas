@@ -3,11 +3,22 @@
   "description": "Estas es el Chat-Server creado con Electron",
   "version": "0.1.0",
   "main": "main.js",
+  "author": {
+    "name": "Kevin"
+  },
+  "homepage": "",
+  "license": "LGPL",
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "appId": "mi-electron-app-1-id",
+    "win": {
+      "target": "NSIS"
+    }
   },
   "dependencies": {
     "colors": "^1.4.0",
