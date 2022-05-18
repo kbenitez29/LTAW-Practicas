@@ -48,17 +48,6 @@ electron.ipcRenderer.on('sendUsers', (event, message) => {
     nUsu.textContent = message;
   });
 
-
-//-- Mensaje recibido del proceso MAIN, direccion ip NO LA MUESTRA NO SE PORQUE ERRORR!!!!!
-// electron.ipcRenderer.on('sendIp', (event, message) => {
-//     console.log("Recibida IP: " + message);
-//     info4.textContent = message;
-    
-//     //-- Generación del código QR en funcion de la URL
-
-//     urls = message
-    
-//   });
   
 //-- Mostrar la direccion IP para conectarse y generar QR
 let urls = 'http://' + ip.address() + ':' + '9090';

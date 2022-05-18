@@ -194,12 +194,6 @@ electron.app.on('ready', () => {
   win.loadFile("index.html");
   
 
-  //   ipAdd = 'http://' + ip.address() + ':' + PUERTO;
-  //   console.log(ipAdd);
-  //   //-- Enviar un mensaje al proceso de renderizado para que lo saque
-  //   //-- por la interfaz gráfica (Direccion ip)
-  //   win.webContents.send('sendIp', ipAdd);
-
 });
 
 
